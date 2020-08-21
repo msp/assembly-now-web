@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "fir-rtc-89b99",
+    "default": "assembly-now-rtc",
     "production": "assembly-now-rtc"
   }
 }

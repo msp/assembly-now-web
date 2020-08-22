@@ -26,11 +26,11 @@ function init() {
   roomDialog = new mdc.dialog.MDCDialog(document.querySelector('#room-dialog'));
 }
 
-async function createRoom() {
+async function createRoom(roomId) {
   document.querySelector('#createBtn').disabled = true;
   document.querySelector('#joinBtn').disabled = true;
   const db = firebase.firestore();
-  const roomRef = await db.collection('rooms').doc();
+  const roomRef = await db.collection('rooms').doc(roomId);
 
   console.log('Create PeerConnection with configuration: ', configuration);
   peerConnection = new RTCPeerConnection(configuration);
@@ -194,9 +194,20 @@ async function openUserMedia(e) {
 
   console.log('Stream:', document.querySelector('#localVideo').srcObject);
   document.querySelector('#cameraBtn').disabled = true;
-  document.querySelector('#joinBtn').disabled = false;
-  document.querySelector('#createBtn').disabled = false;
+  //document.querySelector('#joinBtn').disabled = false;
+  //document.querySelector('#createBtn').disabled = false;
   document.querySelector('#hangupBtn').disabled = false;
+  const functions = firebase.functions();
+  if (location.hostname === "localhost") {
+    functions.useFunctionsEmulator("http://localhost:5001");
+  }
+  const roomData = await functions.httpsCallable("getRoomId")();
+  console.log(roomData);
+  if(roomData.data.role == "caller") {
+    createRoom(roomData.data.room);
+  } else {
+    joinRoomById(roomData.data.room);
+  }
 }
 
 async function hangUp(e) {

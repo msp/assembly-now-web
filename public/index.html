@@ -8,6 +8,8 @@
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.0/gsap.min.js"></script>
+
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/7.13.1/firebase-app.js"></script>
     <!-- include only the Firebase features as you need -->
@@ -17,63 +19,75 @@
 
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
+
 <body>
-<h1>Welcome to FirebaseRTC!</h1>
-<div id="buttons">
-    <button class="mdc-button mdc-button--raised" id="cameraBtn">
-        <i class="material-icons mdc-button__icon" aria-hidden="true">perm_camera_mic</i>
-        <span class="mdc-button__label">Open camera & microphone</span>
-    </button>
-    <button class="mdc-button mdc-button--raised" disabled id="createBtn">
-        <i class="material-icons mdc-button__icon" aria-hidden="true">group_add</i>
-        <span class="mdc-button__label">Create room</span>
-    </button>
-    <button class="mdc-button mdc-button--raised" disabled id="joinBtn">
-        <i class="material-icons mdc-button__icon" aria-hidden="true">group</i>
-        <span class="mdc-button__label">Join room</span>
-    </button>
-    <button class="mdc-button mdc-button--raised" disabled id="hangupBtn">
-        <i class="material-icons mdc-button__icon" aria-hidden="true">close</i>
-        <span class="mdc-button__label">Hangup</span>
-    </button>
-</div>
-<div>
-    <span id="currentRoom"></span>
-</div>
-<div id="videos">
-    <video id="localVideo" muted autoplay playsinline></video>
-    <video id="remoteVideo" autoplay playsinline></video>
-</div>
-<div class="mdc-dialog"
-     id="room-dialog"
-     role="alertdialog"
-     aria-modal="true"
-     aria-labelledby="my-dialog-title"
-     aria-describedby="my-dialog-content">
-    <div class="mdc-dialog__container">
-        <div class="mdc-dialog__surface">
-            <h2 class="mdc-dialog__title" id="my-dialog-title">Join room</h2>
-            <div class="mdc-dialog__content" id="my-dialog-content">
-                Enter ID for room to join:
-                <div class="mdc-text-field">
-                    <input type="text" id="room-id" class="mdc-text-field__input">
-                    <label class="mdc-floating-label" for="my-text-field">Room ID</label>
-                    <div class="mdc-line-ripple"></div>
+    <section id="splash" class="screen">
+        <h1>Assembly Now</h1>
+        <h3>Loading 15%</h3>
+        <p>Credits and thanks</p>
+    </section>
+
+    <section id="intro" class="screen">
+        <h1>One line intro test</h1>
+        <h3>Prompt to accept microphone</h3>
+        <p>Link to disclaimer and data usage</p>
+    </section>
+
+    <section id="experience" class="screen">
+        <div id="buttons">
+            <button class="mdc-button mdc-button--raised" id="cameraBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">perm_camera_mic</i>
+                <span class="mdc-button__label">Open camera & microphone</span>
+            </button>
+            <button class="mdc-button mdc-button--raised" disabled id="createBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">group_add</i>
+                <span class="mdc-button__label">Create room</span>
+            </button>
+            <button class="mdc-button mdc-button--raised" disabled id="joinBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">group</i>
+                <span class="mdc-button__label">Join room</span>
+            </button>
+            <button class="mdc-button mdc-button--raised" disabled id="hangupBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">close</i>
+                <span class="mdc-button__label">Hangup</span>
+            </button>
+        </div>
+        <div>
+            <span id="currentRoom"></span>
+        </div>
+        <div id="videos">
+            <video id="localVideo" muted autoplay playsinline></video>
+            <video id="remoteVideo" autoplay playsinline></video>
+        </div>
+        <div class="mdc-dialog" id="room-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+            aria-describedby="my-dialog-content">
+            <div class="mdc-dialog__container">
+                <div class="mdc-dialog__surface">
+                    <h2 class="mdc-dialog__title" id="my-dialog-title">Join room</h2>
+                    <div class="mdc-dialog__content" id="my-dialog-content">
+                        Enter ID for room to join:
+                        <div class="mdc-text-field">
+                            <input type="text" id="room-id" class="mdc-text-field__input">
+                            <label class="mdc-floating-label" for="my-text-field">Room ID</label>
+                            <div class="mdc-line-ripple"></div>
+                        </div>
+                    </div>
+                    <footer class="mdc-dialog__actions">
+                        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
+                            <span class="mdc-button__label">Cancel</span>
+                        </button>
+                        <button id="confirmJoinBtn" type="button" class="mdc-button mdc-dialog__button"
+                            data-mdc-dialog-action="yes">
+                            <span class="mdc-button__label">Join</span>
+                        </button>
+                    </footer>
                 </div>
             </div>
-            <footer class="mdc-dialog__actions">
-                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
-                    <span class="mdc-button__label">Cancel</span>
-                </button>
-                <button id="confirmJoinBtn" type="button" class="mdc-button mdc-dialog__button"
-                        data-mdc-dialog-action="yes">
-                    <span class="mdc-button__label">Join</span>
-                </button>
-            </footer>
+            <div class="mdc-dialog__scrim"></div>
         </div>
-    </div>
-    <div class="mdc-dialog__scrim"></div>
-</div>
-<script src="app.js"></script>
+        <script src="app.js"></script>
+    </section>
+
 </body>
+
 </html>

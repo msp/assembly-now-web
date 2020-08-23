@@ -18,12 +18,25 @@ let remoteStream = null;
 let roomDialog = null;
 let roomId = null;
 
+let tl = gsap.timeline();
+let runIntro = true;
+
 function init() {
   document.querySelector('#cameraBtn').addEventListener('click', openUserMedia);
   document.querySelector('#hangupBtn').addEventListener('click', hangUp);
   document.querySelector('#createBtn').addEventListener('click', createRoom);
   document.querySelector('#joinBtn').addEventListener('click', joinRoom);
   roomDialog = new mdc.dialog.MDCDialog(document.querySelector('#room-dialog'));
+
+  if (runIntro) {
+    tl.to("#splash.screen", { opacity: 1, duration: 2 });
+    tl.to("#splash.screen", { opacity: 0, duration: 2 });
+
+    tl.to("#intro.screen", { opacity: 1, duration: 2 });
+    tl.to("#intro.screen", { opacity: 0, duration: 2 });
+  }
+
+  tl.to("#experience.screen", { opacity: 1, duration: 2 });
 }
 
 async function createRoom(roomId) {

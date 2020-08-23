@@ -184,6 +184,13 @@ async function joinRoomById(roomId) {
   }
 }
 
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 async function openUserMedia(e) {
   const stream = await navigator.mediaDevices.getUserMedia(
     { video: true, audio: true });
@@ -197,16 +204,31 @@ async function openUserMedia(e) {
   //document.querySelector('#joinBtn').disabled = false;
   //document.querySelector('#createBtn').disabled = false;
   document.querySelector('#hangupBtn').disabled = false;
-  const functions = firebase.functions();
-  if (location.hostname === "localhost") {
-    functions.useFunctionsEmulator("http://localhost:5001");
-  }
-  const roomData = await functions.httpsCallable("getRoomId")();
+  const db = firebase.firestore();
+  const ref = db.doc('config/waiting_room');
+  let roomData = null;
+  await db.runTransaction(async transaction => {
+    const existingRoom = await transaction.get(ref);
+    console.log(existingRoom);
+    if(!existingRoom.exists) {
+      throw(new Error("waiting_room doc does not exist"));
+    }
+
+    if(existingRoom.data().roomId !== "") {
+      const roomId = existingRoom.data().roomId;
+      await transaction.update(ref, {"roomId": ""});
+      roomData = { room: roomId, role: 'callee' };
+    } else {
+      const roomId = uuidv4();
+      await transaction.update(ref, {"roomId": roomId});
+      roomData = { room: roomId, role: 'caller' };
+    }
+  });
   console.log(roomData);
-  if(roomData.data.role == "caller") {
-    createRoom(roomData.data.room);
+  if(roomData.role == "caller") {
+    createRoom(roomData.room);
   } else {
-    joinRoomById(roomData.data.room);
+    joinRoomById(roomData.room);
   }
 }
 

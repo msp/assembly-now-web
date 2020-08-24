@@ -52,6 +52,10 @@
                 <i class="material-icons mdc-button__icon" aria-hidden="true">close</i>
                 <span class="mdc-button__label">Hangup</span>
             </button>
+            <button class="mdc-button mdc-button--raised" id="stopBtn">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">stop_circle</i>
+                <span class="mdc-button__label">Stop animation</span>
+            </button>
         </div>
         <div>
             <span id="currentRoom"></span>
@@ -59,6 +63,10 @@
         <div id="videos">
             <video id="localVideo" muted autoplay playsinline></video>
             <video id="remoteVideo" autoplay playsinline></video>
+        </div>
+
+        <div id="projector">
+
         </div>
         <div class="mdc-dialog" id="room-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
             aria-describedby="my-dialog-content">

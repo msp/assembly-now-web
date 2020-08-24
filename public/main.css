@@ -106,3 +106,16 @@ div#videos > video {
     background-color: #fff;
     color: #000;
 }
+
+video {
+    opacity: 0;
+}
+
+#projector {
+    opacity: 0;
+    display: block;
+    width: 640px;
+    min-height: 400px;
+    background-color: green;
+    filter: blur(5px);
+}

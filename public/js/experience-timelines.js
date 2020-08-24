@@ -27,6 +27,9 @@ function play() {
     console.log("GenerativeTimeline.play");
 
     frameRef = requestAnimationFrame(update);
+
+    document.querySelector('#playBtn').disabled = true;
+    document.querySelector('#stopBtn').disabled = false;
 }
 
 function stop() {
@@ -38,7 +41,8 @@ function stop() {
     gsap.set("#remoteVideo", { opacity: 1 });
     gsap.set("#projector", { opacity: 1 });
 
-
+    document.querySelector('#playBtn').disabled = false;
+    document.querySelector('#stopBtn').disabled = true;
 }
 
 function update() {

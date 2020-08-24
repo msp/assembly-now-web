@@ -10,6 +10,7 @@ function addEventListeners() {
     document.querySelector('#hangupBtn').addEventListener('click', Networking.hangUp);
     document.querySelector('#createBtn').addEventListener('click', Networking.createRoom);
     document.querySelector('#joinBtn').addEventListener('click', Networking.joinRoom);
+    document.querySelector('#playBtn').addEventListener('click', ExperienceTimelines.play);
     document.querySelector('#stopBtn').addEventListener('click', ExperienceTimelines.stop);
 }
 

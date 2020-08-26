@@ -76,20 +76,21 @@ button {
 }
 
 div#videos {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    position: relative;
 }
 
 div#videos > video {
     background: black;
-    width: 640px;
     height: 100%;
     display: block;
     margin: 1em;
 }
 
 .screen {
+    display: grid;
+    grid-template-rows: auto fit-content(10%) fit-content(10%);
+    gap: 10%;
+    justify-content: center;
     opacity: 0;
     position: absolute;
     top: 0px;
@@ -103,19 +104,29 @@ div#videos > video {
 }
 
 #experience.screen {
-    background-color: #fff;
     color: #000;
 }
 
 video {
+    position: absolute;
+    width: 100%;
     opacity: 0;
+}
+
+#remoteVideo {
+    filter: invert(100%) blur(5px);
 }
 
 #projector {
     opacity: 0;
     display: block;
-    width: 640px;
-    min-height: 400px;
-    background-color: green;
+    width: 100%;
+    min-height: 720px;
+    background-color: yellow;
     filter: blur(5px);
 }
+
+#buttons, #currentRoom {
+    background-color: #fff;;
+}
+

@@ -13,9 +13,9 @@ function init() {
     projector1 = new Timeline('projector1', 2); //VFX
     //console.log("MSP JSON light1: "+JSON.stringify(light1)+ "\n");
 
-    light1.events = [200, 600, 1000, 1400];
-    light2.events = [400, 800, 1200];
-    projector1.events = [50, 1001, 2500];
+    light1.events = [50, 250, 500, 800];
+    light2.events = [150, 350, 650];
+    projector1.events = [50, 301, 550];
 
     light1.runEvent = light1Event;
     light2.runEvent = light2Event;
@@ -54,40 +54,32 @@ function update() {
 }
 
 function light1Event() {
-    console.log("Running light1Event!");
-
     gsap.set("#remoteVideo", { opacity: 0 });
     gsap.set("#projector", { opacity: 0 });
     gsap.to("#localVideo", {
         duration: 1,
-        opacity: 1,
-        rotation: 360,
+        opacity: 0.5,
         ease: "none"
     });
 }
 
 function light2Event() {
-    console.log("Running light2Event!");
-
     gsap.set("#localVideo", { opacity: 0 });
     gsap.set("#projector", { opacity: 0 });
     gsap.to("#remoteVideo", {
         duration: 1,
-        opacity: 1,
-        rotation: 360,
+        opacity: 0.5,
         ease: "none"
     });
 }
 
 function projector1Event() {
-    console.log("Running projector1Event!");
-
     gsap.set("#localVideo", { opacity: 0 });
     gsap.set("#remoteVideo", { opacity: 0 });
     gsap.to("#projector", {
         yoyo: true,
-        duration: 1,
-        opacity: 1,
+        duration: 3,
+        opacity: 0.5,
         ease: "elastic"
     });
 

@@ -10,6 +10,18 @@ const configuration = {
     iceCandidatePoolSize: 10,
 };
 
+const constraints = {
+    audio: true,
+    video: {
+        width: {
+            ideal: 1280
+        },
+        height: {
+            ideal: 720
+        }
+    }
+};
+
 let peerConnection = null;
 let localStream = null;
 let remoteStream = null;
@@ -186,8 +198,7 @@ function uuidv4() {
 }
 
 async function openUserMedia(e) {
-    const stream = await navigator.mediaDevices.getUserMedia(
-        { video: true, audio: true });
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
     document.querySelector('#localVideo').srcObject = stream;
     localStream = stream;
     remoteStream = new MediaStream();

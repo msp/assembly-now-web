@@ -12,8 +12,8 @@ function Timeline(name, outlet) {
     this.inlets = 2;
 };
 
-Timeline.prototype.draw = function() {
-    //console.log("Timeline draw() \n");
+Timeline.prototype.update = function() {
+    //console.log("Timeline update() \n");
     if (this.eventFired()) {
         if (this.getChance() > (100 - this.probability)) {
             console.log(this.name + "[" + this.outlet + "]: prob: " + this.probability + " --> " + this.eventCount + "/" + this.events.length + ": " + this.events[this.eventCount] + "\n");

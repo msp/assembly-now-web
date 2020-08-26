@@ -46,9 +46,9 @@ function stop() {
 }
 
 function update() {
-    light1.draw();
-    light2.draw();
-    projector1.draw();
+    light1.update();
+    light2.update();
+    projector1.update();
 
     frameRef = requestAnimationFrame(update);
 }

@@ -113,6 +113,10 @@ video {
     opacity: 0;
 }
 
+#localVideo {
+    filter: blur(3.35px) contrast(2.04) grayscale(1) ;
+}
+
 #remoteVideo {
     filter: invert(100%) blur(5px);
 }

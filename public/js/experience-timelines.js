@@ -1,4 +1,5 @@
 import { Timeline } from './timeline-class.js';
+import * as BackingTrack from './backing-track.js';
 
 let frameRef = null;
 let light1 = null;
@@ -30,6 +31,8 @@ function play() {
 
     document.querySelector('#playBtn').disabled = true;
     document.querySelector('#stopBtn').disabled = false;
+
+    BackingTrack.play();
 }
 
 function stop() {

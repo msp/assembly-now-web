@@ -3,6 +3,7 @@ import * as ExperienceTimelines from './experience-timelines.js';
 
 function init() {
     mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
+    addEventListeners();
 }
 
 function addEventListeners() {
@@ -14,4 +15,4 @@ function addEventListeners() {
     document.querySelector('#stopBtn').addEventListener('click', ExperienceTimelines.stop);
 }
 
-export { init, addEventListeners };
+export { init };

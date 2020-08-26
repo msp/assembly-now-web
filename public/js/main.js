@@ -7,8 +7,6 @@ import * as GUI from './gui.js';
 
 function main() {
   GUI.init();
-  GUI.addEventListeners();
-
   Networking.init();
 
   Intro.play({

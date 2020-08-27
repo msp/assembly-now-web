@@ -1,3 +1,5 @@
+import * as Utils from './utils.js';
+
 function Timeline(name, outlet) {
     console.log("Timeline constructed [" + name + "][" + outlet + "] \n");
     this.name = name;
@@ -42,13 +44,8 @@ Timeline.prototype.eventFired = function() {
     return this.localFrameCount == this.events[this.eventCount];
 }
 
-Timeline.prototype.randomBetween = function(low, high) {
-    var r = Math.floor((Math.random() * high) + low);
-    return r;
-}
-
 Timeline.prototype.getChance = function() {
-    var chance = this.randomBetween(1, 100);
+    var chance = Utils.randomBetween(1, 100);
     return chance;
 }
 

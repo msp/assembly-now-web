@@ -1,25 +1,38 @@
 import * as Utils from './utils.js';
 
-const files = [
-    "https://dl.dropboxusercontent.com/s/gad8ifrj5nvm8vk/BugTones-1.wav?raw=1",
+const light1Files = [
+    // "https://dl.dropboxusercontent.com/s/gad8ifrj5nvm8vk/BugTones-1.wav?raw=1",
     "https://dl.dropboxusercontent.com/s/ztfdyv91x9pcjsw/BugTones-2.wav?raw=1",
     "https://dl.dropboxusercontent.com/s/25mn1vj40ruehhm/BugTones-3.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/fsaxsnegx2vwq9g/BugTones-4.wav?raw=1"
+    // "https://dl.dropboxusercontent.com/s/fsaxsnegx2vwq9g/BugTones-4.wav?raw=1"
+]
+
+const light2Files = [
+    "https://dl.dropboxusercontent.com/s/txpvl9ftm6orks6/Breathing-A.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/rmh9mgppq7qrttu/Breathing-B.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/h3amx9ymic0ptzb/Breathing-C.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/14cgpceusg8cu8o/Breathing-D.wav?raw=1"
+]
+
+const Projector1Files = [
+    "https://dl.dropboxusercontent.com/s/oyaguwzjhunq41e/08-Form-Void.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/gtesqi2zt86hwyu/Form-Misty-Ramen.wav?raw=1"
 ]
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioCtx = new AudioContext();
-const audioBuffers = [];
+const audioBuffersDictionary = {
+    light1: [],
+    light2: [],
+    projector1: []
+};
 
-async function init(responses) {
-    await Promise.all(responses.map(async (response) => {
-        console.log("decoding response: ", response);
+async function init(responsesDictionary) {
+    await decodeFilesFor('light1', responsesDictionary);
+    await decodeFilesFor('light2', responsesDictionary);
+    await decodeFilesFor('projector1', responsesDictionary);
 
-        const audioBuffer = await decodeFile(response);
-        audioBuffers.push(audioBuffer);
-    }));
-
-    return audioBuffers;
+    return audioBuffersDictionary;
 }
 
 function play(audioBuffer) {
@@ -31,29 +44,35 @@ function play(audioBuffer) {
     return sampleSource;
 }
 
-function playRandomFor(camera) {
-    const randomBuffer =
-        audioBuffers[Utils.randomBetween(0, audioBuffers.length)];
+function playRandomFor(screen) {
+    const buffers = audioBuffersDictionary[screen]
+    const randomBuffer = buffers[Utils.randomBetween(0, buffers.length)];
 
-    switch (camera) {
-        case 'light1':
-            play(randomBuffer);
-            break;
-        case 'light2':
-            play(randomBuffer);
-            break;
-        case 'projector1':
-            play(randomBuffer);
-            break;
-        default:
-            console.warning("Unknown device!", camera);
+    if (randomBuffer) {
+        play(randomBuffer);
+    } else {
+        console.warning("Unknown screen!", screen);
     }
 
     return randomBuffer;
 }
 
-function fileList() {
-    return files;
+function fileDictionary() {
+    return {
+        light1: light1Files,
+        light2: light2Files,
+        projector1: Projector1Files
+    }
+}
+
+
+async function decodeFilesFor(screen, responsesDictionary) {
+    await Promise.all(responsesDictionary[screen].map(async (response) => {
+        console.log("decoding response: ", response);
+
+        const audioBuffer = await decodeFile(response);
+        audioBuffersDictionary[screen].push(audioBuffer);
+    }));
 }
 
 async function decodeFile(response) {
@@ -62,4 +81,4 @@ async function decodeFile(response) {
     return audioBuffer;
 }
 
-export { init, play, playRandomFor, fileList };
+export { init, play, playRandomFor, fileDictionary };

@@ -1,31 +1,50 @@
 import * as GUI from './gui.js';
+import { fileDictionary } from './audio-fx.js';
 
-const responses = [];
+const responsesDictionary = {
+    light1: [],
+    light2: [],
+    projector1: []
+};
+
 let totalLoaded = 0;
 let totalRequested = 0;
 
 function init() {
 }
 
-async function run(fileList) {
+async function run(fileDictionary) {
     let allLoaded = false;
-    totalRequested = fileList.length;
+    totalRequested = calculateTotalRequestedIn(fileDictionary);
 
-    await Promise.all(fileList.map(async (file) => {
-        console.log("preloading file: ", file);
-        const sample = await getFile(file);
-        totalLoaded += 1;
-        responses.push(sample);
-
-        GUI.updateLoader(totalLoaded, totalRequested);
-    }));
+    await getFilesFor('light1', fileDictionary);
+    await getFilesFor('light2', fileDictionary);
+    await getFilesFor('projector1', fileDictionary);
 
     allLoaded = true;
-    return responses;
+    return responsesDictionary;
 }
 
 function files() {
-    return responses;
+    return responsesDictionary;
+}
+
+function calculateTotalRequestedIn(fileDictionary) {
+    return fileDictionary['light1'].length +
+        fileDictionary['light2'].length +
+        fileDictionary['projector1'].length;
+}
+
+async function getFilesFor(screen, fileDictionary) {
+    await Promise.all(fileDictionary[screen].map(async (file) => {
+        console.log("preloading file: ", file);
+        const sample = await getFile(file);
+        totalLoaded += 1;
+        responsesDictionary[screen].push(sample);
+
+        // TODO Move out to a callback
+        GUI.updateLoader(totalLoaded, totalRequested);
+    }));
 }
 
 async function getFile(filepath) {

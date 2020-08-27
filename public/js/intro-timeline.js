@@ -19,13 +19,11 @@ function play({ onComplete = () => console.log("nada") } = {}) {
 }
 
 function runPreloader(tl) {
-    Preloader.run(AudioFX.fileList()).then((responses) => {
+    Preloader.run(AudioFX.fileDictionary()).then((responses) => {
         AudioFX.init(responses).then((audioBuffers) => {
-            // AudioFX.play(audioBuffers[0]);
             tl.resume();
         });
     });
-
 }
 
 export { play };

@@ -18,13 +18,18 @@
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="css/loader.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 
 <body>
     <section id="splash" class="screen">
         <h1>Assembly Now</h1>
-        <h3>Loading 15%</h3>
+        <div class="lds-ripple">
+            <div></div>
+            <div></div>
+        </div>
+        <h3>Loading: <span id="totalLoaded">0</span>/<span id="totalRequested">0</span></h3>
         <p>Credits and thanks</p>
     </section>
 

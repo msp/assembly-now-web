@@ -6,6 +6,11 @@ function init() {
     addEventListeners();
 }
 
+function updateLoader(totalLoaded, totalRequested) {
+    document.querySelector('#totalLoaded').textContent = totalLoaded;
+    document.querySelector('#totalRequested').textContent = totalRequested;
+}
+
 function addEventListeners() {
     document.querySelector('#cameraBtn').addEventListener('click', openCamera);
     document.querySelector('#hangupBtn').addEventListener('click', Networking.hangUp);
@@ -38,4 +43,4 @@ function hideControls() {
     gsap.set("#buttons", { opacity: 0 });
 }
 
-export { init };
+export { init, updateLoader };

@@ -21,14 +21,33 @@ async function init(responses) {
 }
 
 function play(audioBuffer) {
-    console.log("AudioFX.play(): ", audioBuffer);
-
     const sampleSource = audioCtx.createBufferSource();
     sampleSource.buffer = audioBuffer;
     // sampleSource.playbackRate.setValueAtTime(playbackRate, audioCtx.currentTime);
     sampleSource.connect(audioCtx.destination)
     sampleSource.start();
     return sampleSource;
+}
+
+function playRandomFor(camera) {
+    const randomBuffer =
+        audioBuffers[Utils.randomBetween(0, audioBuffers.length)];
+
+    switch (camera) {
+        case 'light1':
+            play(randomBuffer);
+            break;
+        case 'light2':
+            play(randomBuffer);
+            break;
+        case 'projector1':
+            play(randomBuffer);
+            break;
+        default:
+            console.warning("Unknown device!", camera);
+    }
+
+    return randomBuffer;
 }
 
 function fileList() {
@@ -41,4 +60,4 @@ async function decodeFile(response) {
     return audioBuffer;
 }
 
-export { init, play, fileList };
+export { init, play, playRandomFor, fileList };

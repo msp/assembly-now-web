@@ -1,5 +1,6 @@
 import { Timeline } from './timeline-class.js';
 import * as BackingTrack from './backing-track.js';
+import * as AudioFX from './audio-fx.js';
 
 let frameRef = null;
 let light1 = null;
@@ -14,9 +15,13 @@ function init() {
     projector1 = new Timeline('projector1', 2); //VFX
     //console.log("MSP JSON light1: "+JSON.stringify(light1)+ "\n");
 
-    light1.events = [50, 250, 500, 800];
-    light2.events = [150, 350, 650];
-    projector1.events = [50, 301, 550];
+    // light1.events = [50, 600, 1200, 8800];
+    // light2.events = [300, 900, 1500];
+    // projector1.events = [80, 320, 550];
+
+    light1.events = [1000, 3000, 5000];
+    light2.events = [1000, 1500, 3500, 5500];
+    projector1.events = [50, 1001, 2500];
 
     light1.runEvent = light1Event;
     light2.runEvent = light2Event;
@@ -59,31 +64,43 @@ function update() {
 function light1Event() {
     gsap.set("#remoteVideo", { opacity: 0 });
     gsap.set("#projector", { opacity: 0 });
+
+    const audioBuffer = AudioFX.playRandomFor('light1');
+
     gsap.to("#localVideo", {
-        duration: 1,
+        duration: audioBuffer.duration,
         opacity: 0.5,
-        ease: "none"
+        ease: "none",
+        onComplete: () => gsap.set("#localVideo", { opacity: 0 })
     });
 }
 
 function light2Event() {
     gsap.set("#localVideo", { opacity: 0 });
     gsap.set("#projector", { opacity: 0 });
+
+    const audioBuffer = AudioFX.playRandomFor('light2');
+
     gsap.to("#remoteVideo", {
-        duration: 1,
+        duration: audioBuffer.duration,
         opacity: 0.5,
-        ease: "none"
+        ease: "none",
+        onComplete: () => gsap.set("#remoteVideo", { opacity: 0 })
     });
 }
 
 function projector1Event() {
     gsap.set("#localVideo", { opacity: 0 });
     gsap.set("#remoteVideo", { opacity: 0 });
+
+    const audioBuffer = AudioFX.playRandomFor('projector1');
+
     gsap.to("#projector", {
         yoyo: true,
-        duration: 3,
+        duration: audioBuffer.duration,
         opacity: 0.5,
-        ease: "elastic"
+        ease: "elastic",
+        onComplete: () => gsap.set("#projector", { opacity: 0 })
     });
 
 }

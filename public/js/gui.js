@@ -28,9 +28,6 @@ function activateStopButton() {
 }
 
 function showLight1Screen(duration) {
-    // gsap.set("#remoteVideo", { opacity: 0 });
-    // gsap.set("#projector", { opacity: 0 });
-
     gsap.to("#localVideo", {
         duration: duration,
         opacity: 0.5,
@@ -40,9 +37,6 @@ function showLight1Screen(duration) {
 }
 
 function showLight2Screen(duration) {
-    // gsap.set("#localVideo", { opacity: 0 });
-    // gsap.set("#projector", { opacity: 0 });
-
     gsap.to("#remoteVideo", {
         duration: duration,
         opacity: 0.5,
@@ -52,9 +46,6 @@ function showLight2Screen(duration) {
 }
 
 function showProjector1Screen(duration) {
-    // gsap.set("#localVideo", { opacity: 0 });
-    // gsap.set("#remoteVideo", { opacity: 0 });
-
     gsap.to("#projector", {
         yoyo: true,
         duration: duration,

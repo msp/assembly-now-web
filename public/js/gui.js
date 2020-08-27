@@ -11,6 +11,59 @@ function updateLoader(totalLoaded, totalRequested) {
     document.querySelector('#totalRequested').textContent = totalRequested;
 }
 
+function showAllScreens() {
+    gsap.set("#localVideo", { opacity: 1 });
+    gsap.set("#remoteVideo", { opacity: 1 });
+    gsap.set("#projector", { opacity: 1 });
+}
+
+function activatePlayButton() {
+    document.querySelector('#playBtn').disabled = false;
+    document.querySelector('#stopBtn').disabled = true;
+}
+
+function activateStopButton() {
+    document.querySelector('#playBtn').disabled = true;
+    document.querySelector('#stopBtn').disabled = false;
+}
+
+function showLight1Screen(duration) {
+    // gsap.set("#remoteVideo", { opacity: 0 });
+    // gsap.set("#projector", { opacity: 0 });
+
+    gsap.to("#localVideo", {
+        duration: duration,
+        opacity: 0.5,
+        ease: "none",
+        onComplete: () => gsap.set("#localVideo", { opacity: 0 })
+    });
+}
+
+function showLight2Screen(duration) {
+    // gsap.set("#localVideo", { opacity: 0 });
+    // gsap.set("#projector", { opacity: 0 });
+
+    gsap.to("#remoteVideo", {
+        duration: duration,
+        opacity: 0.5,
+        ease: "none",
+        onComplete: () => gsap.set("#remoteVideo", { opacity: 0 })
+    });
+}
+
+function showProjector1Screen(duration) {
+    // gsap.set("#localVideo", { opacity: 0 });
+    // gsap.set("#remoteVideo", { opacity: 0 });
+
+    gsap.to("#projector", {
+        yoyo: true,
+        duration: duration,
+        opacity: 0.5,
+        ease: "elastic",
+        onComplete: () => gsap.set("#projector", { opacity: 0 })
+    });
+}
+
 function addEventListeners() {
     document.querySelector('#cameraBtn').addEventListener('click', openCamera);
     document.querySelector('#hangupBtn').addEventListener('click', Networking.hangUp);
@@ -43,4 +96,13 @@ function hideControls() {
     gsap.set("#buttons", { opacity: 0 });
 }
 
-export { init, updateLoader };
+export {
+    init,
+    updateLoader,
+    showAllScreens,
+    activatePlayButton,
+    activateStopButton,
+    showLight1Screen,
+    showLight2Screen,
+    showProjector1Screen
+};

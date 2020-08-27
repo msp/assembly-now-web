@@ -1,6 +1,8 @@
-import { Timeline } from './timeline-class.js';
-import * as BackingTrack from './backing-track.js';
 import * as AudioFX from './audio-fx.js';
+import * as BackingTrack from './backing-track.js';
+import * as GUI from './gui.js';
+import { Timeline } from './timeline-class.js';
+
 
 let frameRef = null;
 let light1 = null;
@@ -30,27 +32,17 @@ function init() {
 
 function play() {
     init();
-    console.log("GenerativeTimeline.play");
-
     frameRef = requestAnimationFrame(update);
 
-    document.querySelector('#playBtn').disabled = true;
-    document.querySelector('#stopBtn').disabled = false;
-
+    GUI.activateStopButton();
     BackingTrack.play();
 }
 
 function stop() {
-    console.log("GenerativeTimeline.stop");
-
     cancelAnimationFrame(frameRef);
 
-    gsap.set("#localVideo", { opacity: 1 });
-    gsap.set("#remoteVideo", { opacity: 1 });
-    gsap.set("#projector", { opacity: 1 });
-
-    document.querySelector('#playBtn').disabled = false;
-    document.querySelector('#stopBtn').disabled = true;
+    GUI.showAllScreens();
+    GUI.activatePlayButton();
 }
 
 function update() {
@@ -62,47 +54,18 @@ function update() {
 }
 
 function light1Event() {
-    gsap.set("#remoteVideo", { opacity: 0 });
-    gsap.set("#projector", { opacity: 0 });
-
     const audioBuffer = AudioFX.playRandomFor('light1');
-
-    gsap.to("#localVideo", {
-        duration: audioBuffer.duration,
-        opacity: 0.5,
-        ease: "none",
-        onComplete: () => gsap.set("#localVideo", { opacity: 0 })
-    });
+    GUI.showLight1Screen(audioBuffer.duration);
 }
 
 function light2Event() {
-    gsap.set("#localVideo", { opacity: 0 });
-    gsap.set("#projector", { opacity: 0 });
-
     const audioBuffer = AudioFX.playRandomFor('light2');
-
-    gsap.to("#remoteVideo", {
-        duration: audioBuffer.duration,
-        opacity: 0.5,
-        ease: "none",
-        onComplete: () => gsap.set("#remoteVideo", { opacity: 0 })
-    });
+    GUI.showLight2Screen(audioBuffer.duration);
 }
 
 function projector1Event() {
-    gsap.set("#localVideo", { opacity: 0 });
-    gsap.set("#remoteVideo", { opacity: 0 });
-
     const audioBuffer = AudioFX.playRandomFor('projector1');
-
-    gsap.to("#projector", {
-        yoyo: true,
-        duration: audioBuffer.duration,
-        opacity: 0.5,
-        ease: "elastic",
-        onComplete: () => gsap.set("#projector", { opacity: 0 })
-    });
-
+    GUI.showProjector1Screen(audioBuffer.duration);
 }
 
 export { play, stop };

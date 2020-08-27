@@ -4,8 +4,7 @@ import * as Preloader from './preloader.js';
 let runIntro = true;
 
 function play({ onComplete = () => console.log("nada") } = {}) {
-    // const tl = gsap.timeline({ onComplete: onComplete });
-    const tl = gsap.timeline({});
+    const tl = gsap.timeline({ onComplete: onComplete });
 
     if (runIntro) {
         tl.to("#splash.screen", { opacity: 1, duration: 2 });
@@ -14,7 +13,7 @@ function play({ onComplete = () => console.log("nada") } = {}) {
 
         tl.to("#intro.screen", { opacity: 1, duration: 2 });
         tl.to("#intro.screen", { opacity: 0, duration: 2 });
-    } 1
+    };
 
     tl.to("#experience.screen", { opacity: 1, duration: 2 });
 }

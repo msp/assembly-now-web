@@ -94,11 +94,6 @@ async function negotiateNewRoom() {
     }
   });
   console.log(roomData, newRoomCreated);
-  if (newRoomCreated) {
-    window.addEventListener('beforeunload', function (event) {
-      registerDisconnection();
-    }, false);
-  }
   if (roomData.role == "caller") {
     createRoom(roomData.room);
   } else {

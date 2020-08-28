@@ -56,10 +56,6 @@ function showProjector1Screen(duration) {
 }
 
 function addEventListeners() {
-    document.querySelector('#cameraBtn').addEventListener('click', openCamera);
-    document.querySelector('#hangupBtn').addEventListener('click', Networking.hangUp);
-    document.querySelector('#createBtn').addEventListener('click', Networking.createRoom);
-    document.querySelector('#joinBtn').addEventListener('click', Networking.joinRoom);
     document.querySelector('#playBtn').addEventListener('click', ExperienceTimelines.play);
     document.querySelector('#stopBtn').addEventListener('click', ExperienceTimelines.stop);
 }
@@ -77,10 +73,17 @@ function fullscreen() {
     }
 }
 
-async function openCamera() {
-    await Networking.openUserMedia();
-    hideControls()
-    fullscreen();
+async function bindOpenCameraHandler(callback) {
+    const button = document.querySelector("#cameraBtn");
+    button.addEventListener("click", async function(event) {
+      event.preventDefault();
+      const experience = document.querySelector("#experience");
+      experience.style.display = 'block';
+      await Networking.openUserMedia();
+      hideControls();
+      fullscreen();
+      callback();
+    });
 }
 
 function hideControls() {
@@ -95,5 +98,6 @@ export {
     activateStopButton,
     showLight1Screen,
     showLight2Screen,
-    showProjector1Screen
+    showProjector1Screen,
+    bindOpenCameraHandler
 };

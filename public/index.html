@@ -35,33 +35,17 @@
 
     <section id="intro" class="screen">
         <h1>One line intro test</h1>
-        <h3>Prompt to accept microphone</h3>
+        <h3><a href="#" id="cameraBtn">Prompt to accept microphone</a></h3>
         <p>Link to disclaimer and data usage</p>
     </section>
 
-    <section id="experience" class="screen">
+    <section id="experience" class="screen" style="display: none;">
         <div id="videos">
             <video id="localVideo" muted autoplay playsinline></video>
             <video id="remoteVideo" autoplay playsinline></video>
             <div id="projector"></div>
         </div>
         <div id="buttons">
-            <button class="mdc-button mdc-button--raised" id="cameraBtn">
-                <i class="material-icons mdc-button__icon" aria-hidden="true">perm_camera_mic</i>
-                <span class="mdc-button__label">Open camera & microphone</span>
-            </button>
-            <button class="mdc-button mdc-button--raised" disabled id="createBtn">
-                <i class="material-icons mdc-button__icon" aria-hidden="true">group_add</i>
-                <span class="mdc-button__label">Create room</span>
-            </button>
-            <button class="mdc-button mdc-button--raised" disabled id="joinBtn">
-                <i class="material-icons mdc-button__icon" aria-hidden="true">group</i>
-                <span class="mdc-button__label">Join room</span>
-            </button>
-            <button class="mdc-button mdc-button--raised" disabled id="hangupBtn">
-                <i class="material-icons mdc-button__icon" aria-hidden="true">close</i>
-                <span class="mdc-button__label">Hangup & restart</span>
-            </button>
             <button class="mdc-button mdc-button--raised" id="playBtn">
                 <i class="material-icons mdc-button__icon" aria-hidden="true">play_circle_filled</i>
                 <span class="mdc-button__label">Play animation</span>

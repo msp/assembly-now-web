@@ -29,12 +29,9 @@ let roomDialog = null;
 let roomId = null;
 
 function init() {
-    roomDialog = new mdc.dialog.MDCDialog(document.querySelector('#room-dialog'));
 }
 
 async function createRoom(roomId) {
-    document.querySelector('#createBtn').disabled = true;
-    document.querySelector('#joinBtn').disabled = true;
     const db = firebase.firestore();
     const roomRef = await db.collection('rooms').doc(roomId);
 
@@ -110,21 +107,6 @@ async function createRoom(roomId) {
     // Listen for remote ICE candidates above
 }
 
-function joinRoom() {
-    document.querySelector('#createBtn').disabled = true;
-    document.querySelector('#joinBtn').disabled = true;
-
-    document.querySelector('#confirmJoinBtn').
-        addEventListener('click', async () => {
-            roomId = document.querySelector('#room-id').value;
-            console.log('Join room: ', roomId);
-            document.querySelector(
-                '#currentRoom').innerText = `Current room is ${roomId} - You are the callee!`;
-            await joinRoomById(roomId);
-        }, { once: true });
-    roomDialog.open();
-}
-
 async function joinRoomById(roomId) {
     const db = firebase.firestore();
     const roomRef = db.collection('rooms').doc(`${roomId}`);
@@ -197,6 +179,42 @@ function uuidv4() {
     });
 }
 
+
+async function negotiateNewRoom() {
+  const db = firebase.firestore();
+  const ref = db.doc('config/waiting_room');
+  let roomData = null;
+  let newRoomCreated = false;
+  await db.runTransaction(async transaction => {
+    const existingRoom = await transaction.get(ref);
+    if (!existingRoom.exists) {
+      throw (new Error("waiting_room doc does not exist"));
+    }
+
+    if (existingRoom.data().roomId !== "") {
+      const roomId = existingRoom.data().roomId;
+      await transaction.update(ref, { "roomId": "" });
+      roomData = { room: roomId, role: 'callee' };
+    } else {
+      const roomId = uuidv4();
+      newRoomCreated = true;
+      await transaction.update(ref, { "roomId": roomId });
+      roomData = { room: roomId, role: 'caller' };
+    }
+  });
+  console.log(roomData, newRoomCreated);
+  if (newRoomCreated) {
+    window.addEventListener('beforeunload', function (event) {
+      registerDisconnection();
+    }, false);
+  }
+  if (roomData.role == "caller") {
+    createRoom(roomData.room);
+  } else {
+    joinRoomById(roomData.room);
+  }
+}
+
 async function openUserMedia(e) {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     document.querySelector('#localVideo').srcObject = stream;
@@ -251,14 +269,6 @@ async function hangUp(e) {
         peerConnection.close();
     }
 
-    document.querySelector('#localVideo').srcObject = null;
-    document.querySelector('#remoteVideo').srcObject = null;
-    document.querySelector('#cameraBtn').disabled = false;
-    document.querySelector('#joinBtn').disabled = true;
-    document.querySelector('#createBtn').disabled = true;
-    document.querySelector('#hangupBtn').disabled = true;
-    document.querySelector('#currentRoom').innerText = '';
-
     // Delete room on hangup
     if (roomId) {
         const db = firebase.firestore();
@@ -297,4 +307,4 @@ function registerPeerConnectionListeners() {
     });
 }
 
-export { init, createRoom, joinRoom, openUserMedia, hangUp };
+export { init, openUserMedia, hangUp };

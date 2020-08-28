@@ -6,7 +6,6 @@ import * as Networking from './networking.js';
 
 function main() {
     GUI.init();
-    Networking.init();
 
     Intro.play({
         onComplete: ExperienceTimelines.play

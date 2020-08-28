@@ -28,7 +28,89 @@ let remoteStream = null;
 let roomDialog = null;
 let roomId = null;
 
-function init() {
+async function openUserMedia(e) {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    document.querySelector('#localVideo').srcObject = stream;
+    localStream = stream;
+    remoteStream = new MediaStream();
+    document.querySelector('#remoteVideo').srcObject = remoteStream;
+
+    console.log('Stream:', document.querySelector('#localVideo').srcObject);
+    await negotiateNewRoom();
+}
+
+async function hangUp(e) {
+    const tracks = document.querySelector('#localVideo').srcObject.getTracks();
+    tracks.forEach(track => {
+        track.stop();
+    });
+
+    if (remoteStream) {
+        remoteStream.getTracks().forEach(track => track.stop());
+    }
+
+    if (peerConnection) {
+        peerConnection.close();
+    }
+
+    // Delete room on hangup
+    if (roomId) {
+        const db = firebase.firestore();
+        const roomRef = db.collection('rooms').doc(roomId);
+        const calleeCandidates = await roomRef.collection('calleeCandidates').get();
+        calleeCandidates.forEach(async candidate => {
+            await candidate.ref.delete();
+        });
+        const callerCandidates = await roomRef.collection('callerCandidates').get();
+        callerCandidates.forEach(async candidate => {
+            await candidate.ref.delete();
+        });
+        await roomRef.delete();
+    }
+
+    document.location.reload(true);
+}
+
+async function negotiateNewRoom() {
+  const db = firebase.firestore();
+  const ref = db.doc('config/waiting_room');
+  let roomData = null;
+  let newRoomCreated = false;
+  await db.runTransaction(async transaction => {
+    const existingRoom = await transaction.get(ref);
+    if (!existingRoom.exists) {
+      throw (new Error("waiting_room doc does not exist"));
+    }
+
+    if (existingRoom.data().roomId !== "") {
+      const roomId = existingRoom.data().roomId;
+      await transaction.update(ref, { "roomId": "" });
+      roomData = { room: roomId, role: 'callee' };
+    } else {
+      const roomId = uuidv4();
+      newRoomCreated = true;
+      await transaction.update(ref, { "roomId": roomId });
+      roomData = { room: roomId, role: 'caller' };
+    }
+  });
+  console.log(roomData, newRoomCreated);
+  if (newRoomCreated) {
+    window.addEventListener('beforeunload', function (event) {
+      registerDisconnection();
+    }, false);
+  }
+  if (roomData.role == "caller") {
+    createRoom(roomData.room);
+  } else {
+    joinRoomById(roomData.room);
+  }
+}
+
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 }
 
 async function createRoom(roomId) {
@@ -172,121 +254,6 @@ async function joinRoomById(roomId) {
     }
 }
 
-function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
-
-
-async function negotiateNewRoom() {
-  const db = firebase.firestore();
-  const ref = db.doc('config/waiting_room');
-  let roomData = null;
-  let newRoomCreated = false;
-  await db.runTransaction(async transaction => {
-    const existingRoom = await transaction.get(ref);
-    if (!existingRoom.exists) {
-      throw (new Error("waiting_room doc does not exist"));
-    }
-
-    if (existingRoom.data().roomId !== "") {
-      const roomId = existingRoom.data().roomId;
-      await transaction.update(ref, { "roomId": "" });
-      roomData = { room: roomId, role: 'callee' };
-    } else {
-      const roomId = uuidv4();
-      newRoomCreated = true;
-      await transaction.update(ref, { "roomId": roomId });
-      roomData = { room: roomId, role: 'caller' };
-    }
-  });
-  console.log(roomData, newRoomCreated);
-  if (newRoomCreated) {
-    window.addEventListener('beforeunload', function (event) {
-      registerDisconnection();
-    }, false);
-  }
-  if (roomData.role == "caller") {
-    createRoom(roomData.room);
-  } else {
-    joinRoomById(roomData.room);
-  }
-}
-
-async function openUserMedia(e) {
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
-    document.querySelector('#localVideo').srcObject = stream;
-    localStream = stream;
-    remoteStream = new MediaStream();
-    document.querySelector('#remoteVideo').srcObject = remoteStream;
-
-    console.log('Stream:', document.querySelector('#localVideo').srcObject);
-    document.querySelector('#cameraBtn').disabled = true;
-    //document.querySelector('#joinBtn').disabled = false;
-    //document.querySelector('#createBtn').disabled = false;
-    document.querySelector('#hangupBtn').disabled = false;
-    const db = firebase.firestore();
-    const ref = db.doc('config/waiting_room');
-    let roomData = null;
-    await db.runTransaction(async transaction => {
-        const existingRoom = await transaction.get(ref);
-        console.log(existingRoom);
-        if (!existingRoom.exists) {
-            throw (new Error("waiting_room doc does not exist"));
-        }
-
-        if (existingRoom.data().roomId !== "") {
-            const roomId = existingRoom.data().roomId;
-            await transaction.update(ref, { "roomId": "" });
-            roomData = { room: roomId, role: 'callee' };
-        } else {
-            const roomId = uuidv4();
-            await transaction.update(ref, { "roomId": roomId });
-            roomData = { room: roomId, role: 'caller' };
-        }
-    });
-    console.log(roomData);
-    if (roomData.role == "caller") {
-        createRoom(roomData.room);
-    } else {
-        joinRoomById(roomData.room);
-    }
-}
-
-async function hangUp(e) {
-    const tracks = document.querySelector('#localVideo').srcObject.getTracks();
-    tracks.forEach(track => {
-        track.stop();
-    });
-
-    if (remoteStream) {
-        remoteStream.getTracks().forEach(track => track.stop());
-    }
-
-    if (peerConnection) {
-        peerConnection.close();
-    }
-
-    // Delete room on hangup
-    if (roomId) {
-        const db = firebase.firestore();
-        const roomRef = db.collection('rooms').doc(roomId);
-        const calleeCandidates = await roomRef.collection('calleeCandidates').get();
-        calleeCandidates.forEach(async candidate => {
-            await candidate.ref.delete();
-        });
-        const callerCandidates = await roomRef.collection('callerCandidates').get();
-        callerCandidates.forEach(async candidate => {
-            await candidate.ref.delete();
-        });
-        await roomRef.delete();
-    }
-
-    document.location.reload(true);
-}
-
 function registerPeerConnectionListeners() {
     peerConnection.addEventListener('icegatheringstatechange', () => {
         console.log(
@@ -301,10 +268,14 @@ function registerPeerConnectionListeners() {
         console.log(`Signaling state change: ${peerConnection.signalingState}`);
     });
 
-    peerConnection.addEventListener('iceconnectionstatechange ', () => {
+    peerConnection.addEventListener('iceconnectionstatechange', () => {
+        if(peerConnection.iceConnectionState == 'disconnected') {
+          console.log('Disconnected');
+          negotiateNewRoom();
+        }
         console.log(
             `ICE connection state change: ${peerConnection.iceConnectionState}`);
     });
 }
 
-export { init, openUserMedia, hangUp };
+export { openUserMedia, hangUp };

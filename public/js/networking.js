@@ -1,3 +1,5 @@
+import * as AudioFX from './audio-fx.js';
+
 const configuration = {
     iceServers: [
         {
@@ -151,13 +153,17 @@ async function createRoom(roomId) {
     document.querySelector(
         '#currentRoom').innerText = `Current room is ${roomRef.id} - You are the caller!`;
     // Code for creating a room above
-
-    peerConnection.addEventListener('track', event => {
+    let reverbAdded = false;
+    peerConnection.addEventListener('track', async event => {
         console.log('Got remote track:', event.streams[0]);
         event.streams[0].getTracks().forEach(track => {
             console.log('Add a track to the remoteStream:', track);
             remoteStream.addTrack(track);
         });
+        if(!reverbAdded) {
+          reverbAdded = true;
+          await AudioFX.initReverb(remoteStream);
+        }
     });
 
     // Listening for remote session description below
@@ -209,13 +215,17 @@ async function joinRoomById(roomId) {
             calleeCandidatesCollection.add(event.candidate.toJSON());
         });
         // Code for collecting ICE candidates above
-
-        peerConnection.addEventListener('track', event => {
+        let reverbAdded = false;
+        peerConnection.addEventListener('track', async event => {
             console.log('Got remote track:', event.streams[0]);
             event.streams[0].getTracks().forEach(track => {
                 console.log('Add a track to the remoteStream:', track);
                 remoteStream.addTrack(track);
             });
+            if(!reverbAdded) {
+              reverbAdded = true;
+              await AudioFX.initReverb(remoteStream);
+            }
         });
 
         // Code for creating SDP answer below

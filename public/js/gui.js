@@ -11,7 +11,7 @@ function init() {
     if (debugMode) {
         showAllScreens();
         showControls();
-        positionScreensForDebug()
+        positionScreensForDebug();
     }
 }
 

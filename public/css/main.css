@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 body {
     background: #ECEFF1;
     color: rgba(0, 0, 0, 0.87);
@@ -71,14 +75,9 @@ button {
     margin: 0.2em 0.1em;
 }
 
-div#videos {
-    position: relative;
-}
-
 div#videos > video {
     background: black;
     height: 100%;
-    display: block;
     margin: 1em;
 }
 
@@ -87,16 +86,13 @@ div#videos > video {
     grid-template-rows: auto fit-content(10%) fit-content(10%);
     gap: 10%;
     justify-content: center;
+    align-content: center;
     opacity: 0;
-    position: absolute;
-    top: 0px;
-    left: 0px;
     width: 100%;
     height: 100%;
     background-color: #000;
     color: #fff;
     text-align: center;
-    padding-top: 3rem;
 }
 
 #experience.screen {
@@ -104,8 +100,6 @@ div#videos > video {
 }
 
 video {
-    position: absolute;
-    width: 100%;
     opacity: 0;
 }
 

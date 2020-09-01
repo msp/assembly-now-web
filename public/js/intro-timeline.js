@@ -9,15 +9,17 @@ function play({ onComplete = () => console.log("nada") } = {}) {
     const tl = gsap.timeline({ onComplete: onComplete });
 
     if (runIntro) {
-        tl.to("#splash.screen", { opacity: 1, duration: 2 });
+        tl.to("#splash.screen", { opacity: 1, display: "grid", duration: 2 });
         tl.addPause(2, runPreloader, [tl]);
         tl.to("#splash.screen", { opacity: 0, duration: 2 });
-        tl.to("#intro.screen", { opacity: 1, duration: 2 });
+        tl.set("#splash.screen", { display: "none" });
+        tl.to("#intro.screen", { opacity: 1, display: "grid", duration: 2 });
         tl.addPause("#intro.screen", requestCameraAccess, [tl]);
         tl.to("#intro.screen", { opacity: 0, duration: 2 });
+        tl.set("#intro.screen", { display: "none" });
     };
 
-    tl.to("#experience.screen", { opacity: 1, duration: 2 });
+    tl.to("#experience.screen", { opacity: 1, display: "grid", duration: 2 });
 }
 
 

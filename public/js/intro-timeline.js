@@ -22,9 +22,9 @@ function play({ onComplete = () => console.log("nada") } = {}) {
 
 
 function requestCameraAccess(tl) {
-  GUI.bindOpenCameraHandler(function() {
-    tl.resume();
-  });
+    GUI.bindOpenCameraHandler(function() {
+        tl.resume();
+    });
 }
 
 function runPreloader(tl) {

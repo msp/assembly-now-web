@@ -1,38 +1,38 @@
 import * as Utils from './utils.js';
 
 class Reverb {
-  constructor(audioContext) {
-    this.context = audioContext;
-    this.input = this.context.createGain();
-    this.output = this.context.createGain();
-  }
+    constructor(audioContext) {
+        this.context = audioContext;
+        this.input = this.context.createGain();
+        this.output = this.context.createGain();
+    }
 
-  async setup(impulseResponseUrl, dryMix=0.8) {
-    this.dryMix = dryMix;
-    this.impulseResponseUrl = impulseResponseUrl;
-    this._setupConnections();
-    await this._setupConvolver();
-  }
+    async setup(impulseResponseUrl, dryMix = 0.8) {
+        this.dryMix = dryMix;
+        this.impulseResponseUrl = impulseResponseUrl;
+        this._setupConnections();
+        await this._setupConvolver();
+    }
 
-  _setupConnections() {
-    this.convolver = this.context.createConvolver();
-    this.dry = this.context.createGain();
-    this.wet = this.context.createGain();
-    this.dry.gain.setValueAtTime(this.dryMix, this.context.currentTime);
-    this.wet.gain.setValueAtTime(1 - this.dryMix, this.context.currentTime);
-    this.input.connect(this.dry);
-    this.input.connect(this.convolver);
-    this.convolver.connect(this.wet);
-    this.dry.connect(this.output);
-    this.wet.connect(this.output);
-  }
+    _setupConnections() {
+        this.convolver = this.context.createConvolver();
+        this.dry = this.context.createGain();
+        this.wet = this.context.createGain();
+        this.dry.gain.setValueAtTime(this.dryMix, this.context.currentTime);
+        this.wet.gain.setValueAtTime(1 - this.dryMix, this.context.currentTime);
+        this.input.connect(this.dry);
+        this.input.connect(this.convolver);
+        this.convolver.connect(this.wet);
+        this.dry.connect(this.output);
+        this.wet.connect(this.output);
+    }
 
-  async _setupConvolver() {
-    const response = await fetch(this.impulseResponseUrl);
-    const buffer = await response.arrayBuffer();
-    const audioBuffer = await this.context.decodeAudioData(buffer);
-    this.convolver.buffer = audioBuffer;
-  }
+    async _setupConvolver() {
+        const response = await fetch(this.impulseResponseUrl);
+        const buffer = await response.arrayBuffer();
+        const audioBuffer = await this.context.decodeAudioData(buffer);
+        this.convolver.buffer = audioBuffer;
+    }
 }
 
 const light1Files = [
@@ -70,11 +70,11 @@ async function init(responsesDictionary) {
 }
 
 async function initReverb(stream) {
-  const reverb = new Reverb(audioCtx);
-  const source = audioCtx.createMediaStreamSource(stream);
-  await reverb.setup("/wav/impulse-response.wav");
-  source.connect(reverb.input);
-  reverb.output.connect(audioCtx.destination);
+    const reverb = new Reverb(audioCtx);
+    const source = audioCtx.createMediaStreamSource(stream);
+    await reverb.setup("/wav/impulse-response.wav");
+    source.connect(reverb.input);
+    reverb.output.connect(audioCtx.destination);
 }
 
 function play(audioBuffer) {

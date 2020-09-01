@@ -1,9 +1,18 @@
 import * as Networking from './networking.js';
 import * as ExperienceTimelines from './experience-timelines.js';
 
+const urlParams = new URLSearchParams(window.location.search);
+const debugMode = urlParams.has('debug');
+
 function init() {
     mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
     addEventListeners();
+
+    if (debugMode) {
+        showAllScreens();
+        showControls();
+        positionScreensForDebug()
+    }
 }
 
 function updateLoader(totalLoaded, totalRequested) {
@@ -28,31 +37,43 @@ function activateStopButton() {
 }
 
 function showLight1Screen(duration) {
-    gsap.to("#localVideo", {
-        duration: duration,
-        opacity: 0.5,
-        ease: "none",
-        onComplete: () => gsap.set("#localVideo", { opacity: 0 })
-    });
+    if (!debugMode) {
+        gsap.to("#localVideo", {
+            duration: duration,
+            opacity: 0.5,
+            ease: "none",
+            onComplete: () => gsap.set("#localVideo", { opacity: 0 })
+        });
+    } else {
+        highlightBorder("localVideo");
+    }
 }
 
 function showLight2Screen(duration) {
-    gsap.to("#remoteVideo", {
-        duration: duration,
-        opacity: 0.5,
-        ease: "none",
-        onComplete: () => gsap.set("#remoteVideo", { opacity: 0 })
-    });
+    if (!debugMode) {
+        gsap.to("#remoteVideo", {
+            duration: duration,
+            opacity: 0.5,
+            ease: "none",
+            onComplete: () => gsap.set("#remoteVideo", { opacity: 0 })
+        });
+    } else {
+        highlightBorder("remoteVideo");
+    }
 }
 
 function showProjector1Screen(duration) {
-    gsap.to("#projector", {
-        yoyo: true,
-        duration: duration,
-        opacity: 0.5,
-        ease: "elastic",
-        onComplete: () => gsap.set("#projector", { opacity: 0 })
-    });
+    if (!debugMode) {
+        gsap.to("#projector", {
+            yoyo: true,
+            duration: duration,
+            opacity: 0.5,
+            ease: "elastic",
+            onComplete: () => gsap.set("#projector", { opacity: 0 })
+        });
+    } else {
+        highlightBorder("projector");
+    }
 }
 
 function addEventListeners() {
@@ -76,18 +97,50 @@ function fullscreen() {
 function bindOpenCameraHandler(callback) {
     const button = document.querySelector("#cameraBtn");
     button.addEventListener("click", async function(event) {
-      event.preventDefault();
-      const experience = document.querySelector("#experience");
-      experience.style.display = 'block';
-      await Networking.openUserMedia();
-      hideControls();
-      fullscreen();
-      callback();
+        event.preventDefault();
+        const experience = document.querySelector("#experience");
+        experience.style.display = 'block';
+        await Networking.openUserMedia();
+        hideControls();
+        fullscreen();
+        callback();
     });
+}
+
+function showControls() {
+    gsap.set("#buttons", { opacity: 1 });
 }
 
 function hideControls() {
     gsap.set("#buttons", { opacity: 0 });
+}
+
+function positionScreensForDebug() {
+    gsap.set("#localVideo, #remoteVideo, #projector", {
+        position: "inherit", width: "33%", float: "left"
+    });
+}
+
+function highlightBorder(screen) {
+    switch (screen) {
+        case "localVideo":
+            gsap.set("#localVideo", { border: "5px solid red" });
+            gsap.set("#remoteVideo", { border: "0px" });
+            gsap.set("#projector", { border: "0px" });
+            break;
+        case "remoteVideo":
+            gsap.set("#localVideo", { border: "0px" });
+            gsap.set("#remoteVideo", { border: "5px solid red" });
+            gsap.set("#projector", { border: "0px" });
+            break;
+        case "projector":
+            gsap.set("#localVideo", { border: "0px" });
+            gsap.set("#remoteVideo", { border: "0px" });
+            gsap.set("#projector", { border: "5px solid red" });
+            break;
+        default:
+            console.log("Unknown screen!", screen);
+    }
 }
 
 export {

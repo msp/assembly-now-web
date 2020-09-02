@@ -43,7 +43,7 @@ async function getFilesFor(screen, fileDictionary) {
         responsesDictionary[screen].push(sample);
 
         // TODO Move out to a callback
-        GUI.updateLoader(totalLoaded, totalRequested);
+        GUI.updateLoaderStats(totalLoaded, totalRequested);
     }));
 }
 
@@ -52,4 +52,4 @@ async function getFile(filepath) {
     return response;
 }
 
-export { init, run, files };
+export { init, run, files, calculateTotalRequestedIn };

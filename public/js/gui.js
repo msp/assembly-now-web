@@ -15,7 +15,7 @@ function init() {
     }
 }
 
-function updateLoader(totalLoaded, totalRequested) {
+function updateLoaderStats(totalLoaded, totalRequested) {
     document.querySelector('#totalLoaded').textContent = totalLoaded;
     document.querySelector('#totalRequested').textContent = totalRequested;
 }
@@ -145,7 +145,7 @@ function highlightBorder(screen) {
 
 export {
     init,
-    updateLoader,
+    updateLoaderStats,
     showAllScreens,
     activatePlayButton,
     activateStopButton,

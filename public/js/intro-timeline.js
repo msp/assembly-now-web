@@ -30,6 +30,11 @@ function requestCameraAccess(tl) {
 }
 
 function runPreloader(tl) {
+    GUI.updateLoaderStats(
+        0,
+        Preloader.calculateTotalRequestedIn(AudioFX.fileDictionary())
+    );
+
     Preloader.run(AudioFX.fileDictionary()).then((responses) => {
         AudioFX.init(responses).then((audioBuffers) => {
             tl.resume();

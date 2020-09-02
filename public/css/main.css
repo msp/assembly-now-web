@@ -112,7 +112,7 @@ video {
     display: block;
     width: 100%;
     min-height: 720px;
-    background-color: yellow;
+    background-color: #ffff00;
     filter: blur(5px);
 }
 

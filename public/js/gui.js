@@ -63,6 +63,8 @@ function showLight2Screen(sample) {
 }
 
 function showProjector1Screen(sample) {
+    setBackgroundColour(sample.url);
+
     if (!debugMode) {
         gsap.to("#projector", {
             yoyo: true,
@@ -74,6 +76,18 @@ function showProjector1Screen(sample) {
     } else {
         highlightBorder("projector");
     }
+}
+
+function setBackgroundColour(url) {
+    if (isBugTone(url)) {
+        gsap.set("#projector", { backgroundColor: "#fff" })
+    } else {
+        gsap.set("#projector", { backgroundColor: "#ffff00" })
+    }
+}
+
+function isBugTone(url) {
+    return url.toLowerCase().includes("bug");
 }
 
 function addEventListeners() {

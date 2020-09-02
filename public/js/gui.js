@@ -1,8 +1,8 @@
-import * as Networking from './networking.js';
 import * as ExperienceTimelines from './experience-timelines.js';
+import * as Networking from './networking.js';
+import * as Utils from './utils.js';
 
-const urlParams = new URLSearchParams(window.location.search);
-const debugMode = urlParams.has('debug');
+const debugMode = Utils.debugMode();
 
 function init() {
     mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
@@ -99,15 +99,17 @@ function addEventListeners() {
 }
 
 function fullscreen() {
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-    } else if (elem.mozRequestFullScreen) { /* Firefox */
-        elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-        elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE/Edge */
-        elem.msRequestFullscreen();
+    if (!debugMode) {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { /* Firefox */
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+            elem.msRequestFullscreen();
+        }
     }
 }
 
@@ -129,7 +131,9 @@ function showControls() {
 }
 
 function hideControls() {
-    gsap.set("#buttons", { opacity: 0 });
+    if (!Utils.debugMode()) {
+        gsap.set("#buttons", { opacity: 0 });
+    }
 }
 
 function positionScreensForDebug() {

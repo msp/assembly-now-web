@@ -3,4 +3,9 @@ function randomBetween(low, high) {
     return r;
 }
 
-export { randomBetween }
+function debugMode() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.has('debug');
+}
+
+export { randomBetween, debugMode }

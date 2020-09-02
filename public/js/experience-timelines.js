@@ -54,18 +54,19 @@ function update() {
 }
 
 function light1Event() {
-    const audioBuffer = AudioFX.playRandomFor('light1');
-    GUI.showLight1Screen(audioBuffer.duration);
+    const sample = AudioFX.playRandomFor('light1');
+    GUI.showLight1Screen(sample);
 }
 
 function light2Event() {
-    const audioBuffer = AudioFX.playRandomFor('light2');
-    GUI.showLight2Screen(audioBuffer.duration);
+    const sample = AudioFX.playRandomFor('light2');
+    GUI.showLight2Screen(sample);
 }
 
 function projector1Event() {
-    const audioBuffer = AudioFX.playRandomFor('projector1');
-    GUI.showProjector1Screen(audioBuffer.duration);
+    const sample = AudioFX.playRandomFor('projector1');
+
+    GUI.showProjector1Screen(sample);
 }
 
 export { play, stop };

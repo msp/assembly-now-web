@@ -115,7 +115,7 @@ function playRandomFor(screen) {
     const randomBuffer = buffers[Utils.randomBetween(0, buffers.length)];
 
     if (randomBuffer) {
-        play(randomBuffer);
+        play(randomBuffer.buffer);
     } else {
         console.warning("Unknown screen!", screen);
     }
@@ -137,7 +137,7 @@ async function decodeFilesFor(screen, responsesDictionary) {
         console.log("decoding response: ", response);
 
         const audioBuffer = await decodeFile(response);
-        audioBuffersDictionary[screen].push(audioBuffer);
+        audioBuffersDictionary[screen].push({ url: response.url, buffer: audioBuffer });
     }));
 }
 

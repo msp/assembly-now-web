@@ -36,10 +36,10 @@ function activateStopButton() {
     document.querySelector('#stopBtn').disabled = false;
 }
 
-function showLight1Screen(duration) {
+function showLight1Screen(sample) {
     if (!debugMode) {
         gsap.to("#localVideo", {
-            duration: duration,
+            duration: sample.buffer.duration,
             opacity: 0.5,
             ease: "none",
             onComplete: () => gsap.set("#localVideo", { opacity: 0 })
@@ -49,10 +49,10 @@ function showLight1Screen(duration) {
     }
 }
 
-function showLight2Screen(duration) {
+function showLight2Screen(sample) {
     if (!debugMode) {
         gsap.to("#remoteVideo", {
-            duration: duration,
+            duration: sample.buffer.duration,
             opacity: 0.5,
             ease: "none",
             onComplete: () => gsap.set("#remoteVideo", { opacity: 0 })
@@ -62,11 +62,11 @@ function showLight2Screen(duration) {
     }
 }
 
-function showProjector1Screen(duration) {
+function showProjector1Screen(sample) {
     if (!debugMode) {
         gsap.to("#projector", {
             yoyo: true,
-            duration: duration,
+            duration: sample.buffer.duration,
             opacity: 0.5,
             ease: "elastic",
             onComplete: () => gsap.set("#projector", { opacity: 0 })

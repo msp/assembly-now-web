@@ -74,7 +74,6 @@ button {
 div#videos > video {
     background: black;
     height: 100%;
-    margin: 1em;
 }
 
 .screen {
@@ -93,10 +92,22 @@ div#videos > video {
 
 #experience.screen {
     color: #000;
+    justify-content: inherit;
 }
+
+/* Only if we need a subgrid?
+#videos {
+    border: 1px solid red;
+    display: grid;
+    grid-template-columns: auto;
+    justify-content: center;
+} */
 
 video {
     opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 
 #localVideo {
@@ -110,10 +121,11 @@ video {
 #projector {
     opacity: 0;
     display: block;
-    width: 100%;
-    min-height: 720px;
+    /* TODO Need to calc this is JS per device */
+    min-height: 1220px;
+    margin-top: 15%;
     background-color: #ffff00;
-    filter: blur(5px);
+    filter: blur(15px);
 }
 
 #buttons, #currentRoom {

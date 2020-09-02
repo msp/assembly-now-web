@@ -117,7 +117,7 @@ function playRandomFor(screen) {
     if (randomBuffer) {
         play(randomBuffer.buffer);
     } else {
-        console.warning("Unknown screen!", screen);
+        console.log("Unknown screen!", screen);
     }
 
     return randomBuffer;

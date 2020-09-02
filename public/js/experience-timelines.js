@@ -19,7 +19,7 @@ function init() {
 
     // light1.events = [50, 600, 1200, 8800];
     // light2.events = [300, 900, 1500];
-    // projector1.events = [80, 320, 550];
+    // projector1.events = [320, 550];
 
     light1.events = [1000, 3000, 5000];
     light2.events = [1000, 1500, 3500, 5500];

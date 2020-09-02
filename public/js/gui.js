@@ -79,15 +79,18 @@ function showProjector1Screen(sample) {
 }
 
 function setBackgroundColour(url) {
-    if (isBugTone(url)) {
-        gsap.set("#projector", { backgroundColor: "#fff" })
-    } else {
+    if (sampleCalled("form-void", url)) {
         gsap.set("#projector", { backgroundColor: "#ffff00" })
+    } else if (sampleCalled("form-misty", url)) {
+        gsap.set("#projector", { backgroundColor: "#ff0000" })
+    } else {
+        // Bug Tones
+        gsap.set("#projector", { backgroundColor: "#ffffff" })
     }
 }
 
-function isBugTone(url) {
-    return url.toLowerCase().includes("bug");
+function sampleCalled(name, url) {
+    return url.toLowerCase().includes(name);
 }
 
 function addEventListeners() {

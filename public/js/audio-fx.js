@@ -36,46 +36,46 @@ class Reverb {
 }
 
 const light1Files = [
-    "https://dl.dropboxusercontent.com/s/l6ffhmag6ikrcl1/20200901-assembly-now-narrative-01.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/rnpoddi5bko2wt6/20200901-assembly-now-narrative-04.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/kzu990sr7gugp7n/20200901-assembly-now-narrative-08.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/0ffwz10hha9dojx/20200901-assembly-now-narrative-09.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/68znx4rnuym0bvh/20200901-assembly-now-narrative-10.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/izhvfw8p50mzc83/20200901-assembly-now-narrative-14.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/mz9eaqrvad2mdiw/20200901-assembly-now-narrative-16.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/yhxz9xjfoth53v1/20200901-assembly-now-narrative-17.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/hskt4zea3jsgee9/20200901-assembly-now-narrative-18.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/ygii5httheoxh9j/20200901-assembly-now-narrative-21.wav?raw=1"
+    "https://dl.dropboxusercontent.com/s/cly94x13trrzodg/20200901-assembly-now-narrative-01.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/msys9ijcrdr0nha/20200901-assembly-now-narrative-04.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/atqhy9vqljqp2j5/20200901-assembly-now-narrative-08.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/031v5t7b9o3rvhj/20200901-assembly-now-narrative-09.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/j9ttlm8v5540xf2/20200901-assembly-now-narrative-10.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/d3zq18vkjpd120n/20200901-assembly-now-narrative-14.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/evozgto9eu5wtgs/20200901-assembly-now-narrative-16.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/7ekvha8ovqpe6qb/20200901-assembly-now-narrative-17.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/6delezzqaaq8b2h/20200901-assembly-now-narrative-18.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/hjkjtzp98ssvoxn/20200901-assembly-now-narrative-21.mp3?raw=1"
 ]
 
 const light2Files = [
-    "https://dl.dropboxusercontent.com/s/vpt7b1vmoizmhd8/Breathing-2.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/q4os5d9dng79uem/Breathing-4.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/wtayqk8u8jtgq2s/Breathing-6.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/ypgtmknixickwfk/Breathing-7.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/erd4hpsogwcqxed/Breathing-9.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/l0w7mrkynqsgyvn/Breathing-B.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/27qar95r0mqnumb/Breathing-C.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/9vnrse419jgzbnl/Breathing-E.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/ipghrsmzjjyvebh/Breathing-I.wav?raw=1"
+    "https://dl.dropboxusercontent.com/s/ll4b66kedyfdykd/Breathing-2.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/j2vjkuc843m0yf7/Breathing-4.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/jmwb3kty2fvezq6/Breathing-6.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/lg2fri5n877lj1i/Breathing-7.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/lc8jrv6y8np3yrp/Breathing-9.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/q3j3wbfjdaqgbe5/Breathing-B.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/i551yh3hpfuhvvg/Breathing-C.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/wdbo5on8fv8pa66/Breathing-E.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/nw2bob2b5od09uq/Breathing-I.mp3?raw=1"
 ]
 
 const Projector1Files = [
-    "https://dl.dropboxusercontent.com/s/oyaguwzjhunq41e/08-Form-Void.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/gtesqi2zt86hwyu/Form-Misty-Ramen.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/jsprcjmlpc02keg/BugTones-1.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/jjuvuo2fab6idog/BugTones-2.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/jsgxw5okhsetbmo/BugTones-3.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/e22fq3n9230fwdc/BugTones-4.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/bo62tahgd1a1fxs/BugTones-5.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/qmbudoivgae84i6/BugTones-6.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/53v8a27xye0m2v7/BugTones-7.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/drjvuj41vmbljj4/BugTones-8.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/pzxc9y45tuvehb2/BugTones-9.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/zpicc6i9al2kdw5/BugTones-10.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/6t4cvn3n7oeqerz/BugTones-12.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/7nxszyek9lh3h6d/BugTones-18.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/t9sapxzk7gsb3bg/BugTones-20.wav?raw=1"
+    "https://dl.dropboxusercontent.com/s/s96g8kvq53f33nq/08-Form-Void.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/0tclpeeu7d8ixpg/Form-Misty-Ramen.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/q49wk8cl4fdysqj/BugTones-1.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/1nvf19jsdj3bx3x/BugTones-2.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/zq2i39icx4pxfa9/BugTones-3.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/gxvt47zd740ttkc/BugTones-4.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/nfb9opjrgu9sud2/BugTones-5.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/bue5pet3z3x9jwf/BugTones-6.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/bbuatd3j694glwp/BugTones-7.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/fd79y2b5387a7jt/BugTones-8.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/7momtzv6db5aipn/BugTones-9.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/68w72vwadkjfvpv/BugTones-10.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/n7iej6p0nb9h4it/BugTones-12.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/45aql5w87vafw4t/BugTones-18.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/rarws687ckqr1b5/BugTones-20.mp3?raw=1",
 ]
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;

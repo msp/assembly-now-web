@@ -7,7 +7,7 @@ class Reverb {
         this.output = this.context.createGain();
     }
 
-    async setup(impulseResponseUrl, dryMix = 0.8) {
+    async setup(impulseResponseUrl, dryMix = 0.9) {
         this.dryMix = dryMix;
         this.impulseResponseUrl = impulseResponseUrl;
         this._setupConnections();

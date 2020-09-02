@@ -36,22 +36,46 @@ class Reverb {
 }
 
 const light1Files = [
-    "https://dl.dropboxusercontent.com/s/gad8ifrj5nvm8vk/BugTones-1.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/ztfdyv91x9pcjsw/BugTones-2.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/25mn1vj40ruehhm/BugTones-3.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/fsaxsnegx2vwq9g/BugTones-4.wav?raw=1"
+    "https://dl.dropboxusercontent.com/s/l6ffhmag6ikrcl1/20200901-assembly-now-narrative-01.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/rnpoddi5bko2wt6/20200901-assembly-now-narrative-04.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/kzu990sr7gugp7n/20200901-assembly-now-narrative-08.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/0ffwz10hha9dojx/20200901-assembly-now-narrative-09.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/68znx4rnuym0bvh/20200901-assembly-now-narrative-10.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/izhvfw8p50mzc83/20200901-assembly-now-narrative-14.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/mz9eaqrvad2mdiw/20200901-assembly-now-narrative-16.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/yhxz9xjfoth53v1/20200901-assembly-now-narrative-17.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/hskt4zea3jsgee9/20200901-assembly-now-narrative-18.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/ygii5httheoxh9j/20200901-assembly-now-narrative-21.wav?raw=1"
 ]
 
 const light2Files = [
-    "https://dl.dropboxusercontent.com/s/txpvl9ftm6orks6/Breathing-A.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/rmh9mgppq7qrttu/Breathing-B.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/h3amx9ymic0ptzb/Breathing-C.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/14cgpceusg8cu8o/Breathing-D.wav?raw=1"
+    "https://dl.dropboxusercontent.com/s/vpt7b1vmoizmhd8/Breathing-2.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/q4os5d9dng79uem/Breathing-4.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/wtayqk8u8jtgq2s/Breathing-6.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/ypgtmknixickwfk/Breathing-7.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/erd4hpsogwcqxed/Breathing-9.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/l0w7mrkynqsgyvn/Breathing-B.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/27qar95r0mqnumb/Breathing-C.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/9vnrse419jgzbnl/Breathing-E.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/ipghrsmzjjyvebh/Breathing-I.wav?raw=1"
 ]
 
 const Projector1Files = [
     "https://dl.dropboxusercontent.com/s/oyaguwzjhunq41e/08-Form-Void.wav?raw=1",
-    "https://dl.dropboxusercontent.com/s/gtesqi2zt86hwyu/Form-Misty-Ramen.wav?raw=1"
+    "https://dl.dropboxusercontent.com/s/gtesqi2zt86hwyu/Form-Misty-Ramen.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/jsprcjmlpc02keg/BugTones-1.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/jjuvuo2fab6idog/BugTones-2.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/jsgxw5okhsetbmo/BugTones-3.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/e22fq3n9230fwdc/BugTones-4.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/bo62tahgd1a1fxs/BugTones-5.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/qmbudoivgae84i6/BugTones-6.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/53v8a27xye0m2v7/BugTones-7.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/drjvuj41vmbljj4/BugTones-8.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/pzxc9y45tuvehb2/BugTones-9.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/zpicc6i9al2kdw5/BugTones-10.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/6t4cvn3n7oeqerz/BugTones-12.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/7nxszyek9lh3h6d/BugTones-18.wav?raw=1",
+    "https://dl.dropboxusercontent.com/s/t9sapxzk7gsb3bg/BugTones-20.wav?raw=1"
 ]
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;

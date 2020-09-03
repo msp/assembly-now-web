@@ -10,6 +10,11 @@ body {
     padding: 0;
 }
 
+a {
+    color: #01871f;
+    text-decoration: none;
+}
+
 #message {
     background: white;
     max-width: 360px;
@@ -98,6 +103,7 @@ div#videos > video {
 
 #splash.screen {
     gap: 5%;
+    font-size: larger;
 }
 
 #splash.screen h1 {
@@ -108,8 +114,43 @@ div#videos > video {
 
 #splash.screen #credits {
     opacity: 0;
-    font-size: larger;
 }
+
+#intro.screen {
+    gap: 8%;
+    font-size: larger;
+    grid-template-rows: auto auto auto;
+}
+
+#intro.screen summary,
+#intro.screen summary #intro-one,
+#intro.screen summary #intro-two,
+#intro.screen summary #housekeeping,
+#intro.screen nav,
+#intro.screen footer{
+    opacity: 0;
+}
+
+#intro.screen #housekeeping {
+    margin-top: 96px;
+}
+
+#intro.screen #camera-prompt {
+    font-size: xx-large;
+}
+
+#intro.screen .mdc-button--raised {
+    background-color: rgba(0, 0, 0, 0.24);
+}
+
+#intro.screen .warning {
+    color: darksalmon;
+}
+
+#intro.screen #disclaimer {
+    margin-top: 64px;
+}
+
 
 /* Only if we need a subgrid?
 #videos {

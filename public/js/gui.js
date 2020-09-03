@@ -135,7 +135,7 @@ function fullscreen() {
 }
 
 function bindOpenCameraHandler(callback) {
-    const button = document.querySelector("#cameraBtn");
+    const button = document.querySelector("#camera-prompt");
     button.addEventListener("click", async function(event) {
         event.preventDefault();
         const experience = document.querySelector("#experience");

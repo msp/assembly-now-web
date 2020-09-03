@@ -14,7 +14,6 @@ const constraints = {
 };
 
 import * as ExperienceTimelines from './experience-timelines.js';
-import * as Networking from './networking.js';
 import * as Utils from './utils.js';
 
 const debugMode = Utils.debugMode();

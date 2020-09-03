@@ -22,11 +22,18 @@ function init() {
     mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
     addEventListeners();
 
+    animateTitle();
+
     if (debugMode) {
         showAllScreens();
         showControls();
         positionScreensForDebug();
     }
+}
+
+function animateTitle() {
+    gsap.registerPlugin(TextPlugin);
+    gsap.to("#title", { duration: 2, text: "assembly now!", delay: 1 });
 }
 
 function updateLoaderStats(totalLoaded, totalRequested) {

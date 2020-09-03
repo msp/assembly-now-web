@@ -88,11 +88,27 @@ div#videos > video {
     background-color: #000;
     color: #fff;
     text-align: center;
+    /* border: 5px solid blue; */
 }
 
 #experience.screen {
     color: #000;
     justify-content: inherit;
+}
+
+#splash.screen {
+    gap: 5%;
+}
+
+#splash.screen h1 {
+    font-size: 15vh;
+    line-height: 15vh;
+    text-transform: uppercase;
+}
+
+#splash.screen #credits {
+    opacity: 0;
+    font-size: larger;
 }
 
 /* Only if we need a subgrid?

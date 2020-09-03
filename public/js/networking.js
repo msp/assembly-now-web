@@ -62,7 +62,6 @@ class Networking {
   }
 
   stopTracks() {
-    this.localStream.getTracks().forEach(track => track.stop());
     this.remoteStream.getTracks().forEach(track => track.stop());
   }
 

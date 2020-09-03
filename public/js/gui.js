@@ -1,3 +1,18 @@
+import { Networking } from './networking.js';
+import * as AudioFX from './audio-fx.js'
+
+const constraints = {
+  audio: true,
+  video: {
+    width: {
+      ideal: 1280
+    },
+    height: {
+      ideal: 720
+    }
+  }
+};
+
 import * as ExperienceTimelines from './experience-timelines.js';
 import * as Networking from './networking.js';
 import * as Utils from './utils.js';
@@ -116,13 +131,20 @@ function fullscreen() {
 function bindOpenCameraHandler(callback) {
     const button = document.querySelector("#cameraBtn");
     button.addEventListener("click", async function(event) {
-        event.preventDefault();
-        const experience = document.querySelector("#experience");
-        experience.style.display = 'block';
-        await Networking.openUserMedia();
-        hideControls();
-        fullscreen();
-        callback();
+      event.preventDefault();
+      const experience = document.querySelector("#experience");
+      experience.style.display = 'block';
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      const localVideo = document.querySelector('#localVideo');
+      const remoteVideo = document.querySelector('#remoteVideo');
+      const networking = new Networking(stream, localVideo, remoteVideo);
+      networking.audioAddedCallback = async function() {
+        await AudioFX.initReverb(networking.remoteStream);
+      }
+      await networking.initialize();
+      hideControls();
+      fullscreen();
+      callback();
     });
 }
 

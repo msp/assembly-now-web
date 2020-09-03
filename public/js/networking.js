@@ -1,3 +1,5 @@
+import * as Utils from './utils.js';
+
 const configuration = {
   iceServers: [
     {
@@ -9,14 +11,6 @@ const configuration = {
   ],
   iceCandidatePoolSize: 10,
 };
-
-function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
-}
-
 
 class Networking {
   constructor(stream, localVideoElement, remoteVideoElement) {
@@ -115,7 +109,7 @@ class Networking {
         this.roomId = roomId;
         this.role = "callee";
       } else {
-        const roomId = uuidv4();
+        const roomId = Utils.uuidv4();
         await transaction.update(ref, { "roomId": roomId });
         this.roomId = roomId;
         this.role = "caller"
@@ -148,7 +142,7 @@ class Networking {
   async joinRoom() {
     const roomRef = this.db.collection('rooms').doc(`${this.roomId}`);
     const roomSnapshot = await roomRef.get();
-    if(roomSnapshot.exists) {
+    if (roomSnapshot.exists) {
       this.peerConnection = new RTCPeerConnection(configuration);
       this.registerPeerConnectionListeners();
       this.addLocalStreamToPeerConnection();
@@ -199,7 +193,7 @@ class Networking {
 
   registerPeerConnectionListeners() {
     this.peerConnection.addEventListener('iceconnectionstatechange', function() {
-      if(this.peerConnection.iceConnectionState == 'disconnected') {
+      if (this.peerConnection.iceConnectionState == 'disconnected') {
         this.reinitialize();
       }
     }.bind(this));
@@ -209,7 +203,7 @@ class Networking {
     this.peerConnection.addEventListener('track', async event => {
       event.streams[0].getTracks().forEach(async track => {
         this.remoteStream.addTrack(track);
-        if(this.audioAddedCallback && !this.audioAddedCallbackCalled && track.kind == 'audio') {
+        if (this.audioAddedCallback && !this.audioAddedCallbackCalled && track.kind == 'audio') {
           await this.audioAddedCallback();
           this.audioAddedCallbackCalled = true;
         }
@@ -246,7 +240,5 @@ class Networking {
     });
   }
 }
-
-
 
 export { Networking }

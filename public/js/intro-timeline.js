@@ -1,6 +1,5 @@
 import * as AudioFX from './audio-fx.js';
 import * as Preloader from './preloader.js';
-import * as Networking from './networking.js';
 import * as GUI from './gui.js';
 
 let runIntro = true;

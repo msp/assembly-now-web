@@ -16,6 +16,9 @@ class MediaDelay {
       mimeType: mimeType
     });
     const delayedStream = new MediaSource();
+    this.videoElement.pause();
+    this.videoElement.srcObject = null;
+    this.videoElement.src = null;
     this.videoElement.src = URL.createObjectURL(delayedStream);
     this.delayedStream = delayedStream;
     delayedStream.addEventListener('sourceopen', async function(event) {
@@ -25,6 +28,7 @@ class MediaDelay {
         this.streamAddedCallbackCalled = true;
       }
     }.bind(this), false);
+    this.videoElement.play();
     this.mediaRecorder.ondataavailable = function(event) {
       var reader = new FileReader();
       reader.addEventListener("loadend", function() {

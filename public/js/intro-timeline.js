@@ -3,6 +3,7 @@ import * as Preloader from './preloader.js';
 import * as GUI from './gui.js';
 
 let runIntro = true;
+let pauseSeconds = 5;
 
 function play({ onComplete = () => console.log("nada") } = {}) {
     const tl = gsap.timeline({ onComplete: onComplete });
@@ -19,13 +20,13 @@ function play({ onComplete = () => console.log("nada") } = {}) {
         tl.to("#intro.screen", { opacity: 1, display: "grid", duration: 1 });
         tl.to("#intro.screen summary", { opacity: 1, duration: 1 });
         tl.to("#intro.screen summary #intro-one", { opacity: 1, duration: 1 });
-        tl.to({}, 5, {}); //pause
+        tl.to({}, pauseSeconds, {});
         tl.to("#intro.screen summary #intro-two", { opacity: 1, duration: 1 });
-        tl.to({}, 5, {}); //pause
+        tl.to({}, pauseSeconds, {});
         tl.to("#intro.screen summary #housekeeping", { opacity: 1, duration: 1 });
-        tl.to({}, 4, {}); //pause
+        tl.to({}, pauseSeconds - 1, {});
         tl.to("#intro.screen footer", { opacity: 1, duration: 1 });
-        tl.to({}, 5, {}); //pause
+        tl.to({}, pauseSeconds, {});
         tl.to("#intro.screen nav", { opacity: 1, duration: 0.5, yoyo: true, repeat: 4 });
         tl.addPause("#intro.screen", requestCameraAccess, [tl]);
         tl.to("#intro.screen", { opacity: 0, duration: 2 });

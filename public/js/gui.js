@@ -1,5 +1,5 @@
-import { Networking } from './networking.js';
-import * as AudioFX from './audio-fx.js'
+import * as ExperienceTimelines from './experience-timelines.js';
+import * as Utils from './utils.js';
 
 const constraints = {
     audio: true,
@@ -12,9 +12,6 @@ const constraints = {
         }
     }
 };
-
-import * as ExperienceTimelines from './experience-timelines.js';
-import * as Utils from './utils.js';
 
 const debugMode = Utils.debugMode();
 
@@ -136,20 +133,9 @@ function fullscreen() {
 
 function bindOpenCameraHandler(callback) {
     const button = document.querySelector("#camera-prompt");
-    button.addEventListener("click", async function(event) {
+    button.addEventListener("click", function(event) {
         event.preventDefault();
-        const experience = document.querySelector("#experience");
-        experience.style.display = 'block';
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        const localVideo = document.querySelector('#localVideo');
-        const remoteVideo = document.querySelector('#remoteVideo');
-        const networking = new Networking(stream, localVideo, remoteVideo);
-        networking.audioAddedCallback = async function() {
-            await AudioFX.initReverb(networking.remoteStream);
-        }
-        await networking.initialize();
-        hideControls();
-        fullscreen();
+
         callback();
     });
 }
@@ -192,14 +178,29 @@ function highlightBorder(screen) {
     }
 }
 
+async function getUserMedia() {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    const localVideo = document.querySelector('#localVideo');
+    const remoteVideo = document.querySelector('#remoteVideo');
+
+    return {
+        stream,
+        localVideo,
+        remoteVideo
+    }
+}
+
 export {
-    init,
-    updateLoaderStats,
-    showAllScreens,
     activatePlayButton,
     activateStopButton,
+    bindOpenCameraHandler,
+    fullscreen,
+    getUserMedia,
+    hideControls,
+    init,
+    showAllScreens,
     showLight1Screen,
     showLight2Screen,
     showProjector1Screen,
-    bindOpenCameraHandler
+    updateLoaderStats,
 };

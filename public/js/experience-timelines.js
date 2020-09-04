@@ -1,5 +1,4 @@
 import * as AudioFX from './audio-fx.js';
-import * as BackingTrack from './backing-track.js';
 import * as GUI from './gui.js';
 import { Timeline } from './timeline-class.js';
 
@@ -35,7 +34,6 @@ function play() {
     frameRef = requestAnimationFrame(update);
 
     GUI.activateStopButton();
-    BackingTrack.play();
 }
 
 function stop() {

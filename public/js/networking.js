@@ -1,3 +1,4 @@
+import * as AudioFX from './audio-fx.js';
 import * as Utils from './utils.js';
 
 const configuration = {
@@ -241,4 +242,14 @@ class Networking {
   }
 }
 
-export { Networking }
+async function connect(stream, localVideo, remoteVideo) {
+  const networking = new Networking(stream, localVideo, remoteVideo);
+
+  networking.audioAddedCallback = async function() {
+    await AudioFX.initReverb(networking.remoteStream);
+  }
+
+  await networking.initialize();
+}
+
+export { connect }

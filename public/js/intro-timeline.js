@@ -1,4 +1,6 @@
 import * as AudioFX from './audio-fx.js';
+import * as BackingTrack from './backing-track.js';
+import * as Networking from './networking.js';
 import * as Preloader from './preloader.js';
 import * as GUI from './gui.js';
 
@@ -36,10 +38,21 @@ function play({ onComplete = () => console.log("nada") } = {}) {
     tl.to("#experience.screen", { opacity: 1, display: "grid", duration: 2 });
 }
 
-
 function requestCameraAccess(tl) {
     GUI.bindOpenCameraHandler(function() {
-        tl.resume();
+        // Keep outside of async so it works in Safari!
+        BackingTrack.play();
+
+        GUI.getUserMedia().then((media) => {
+            let { stream, localVideo, remoteVideo } = media;
+
+            Networking.connect(stream, localVideo, remoteVideo);
+
+            GUI.hideControls();
+            GUI.fullscreen();
+
+            tl.resume();
+        })
     });
 }
 

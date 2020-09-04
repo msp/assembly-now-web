@@ -1,8 +1,20 @@
-# Firebase + WebRTC Codelab
-### Full code solution can be found under the branch: _solution_
-This is the GitHub repo for the FirebaseRTC codelab. This will teach you how 
-to use Firebase Cloud Firestore for signalling in a WebRTC video chat application.
+# Assembly Now
 
-The solution to this codelab can be seen in the _solution_ branch.
+Web version of this installation: https://metroarts.com.au/assembly-now/
 
-See http://webrtc.org for details.
+### Configure & Run
+
+```
+$ npm install -g firebase-tools
+
+$ firebase serve --only hosting
+
+$ open http://localhost:5000
+```
+
+### Thanks
+
+- [Sally Golding](http://sallygolding.com/)
+- [Tim Cowlishaw](http://timcowlishaw.co.uk/)
+- [Metro Arts](https://metroarts.com.au/assembly-now/)
+- [Brisbane Festival](http://brisbanefestival.com.au/whats-on/assembly-now)

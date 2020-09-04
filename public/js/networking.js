@@ -16,12 +16,12 @@ const configuration = {
 class Networking {
   constructor(stream, localVideoElement, remoteVideoElement) {
     this.localStream = stream;
-    this.localVideoElement = localVideoElement
-    this.remoteVideoElement = remoteVideoElement
+    this.localVideoElement = localVideoElement;
+    this.remoteVideoElement = remoteVideoElement;
 
-    this.audioAddedCallback = null;
+    this.connectionCallback = null;
+    this.disconnectionCallback = null;
 
-    this.audioAddedCallbackCalled = false;
     this.remoteStream = null;
     this.peerConnection = null;
     this.roomId = null;
@@ -32,8 +32,6 @@ class Networking {
 
   async initialize() {
     this.remoteStream = new MediaStream();
-    this.localVideoElement.srcObject = this.localStream;
-    this.remoteVideoElement.srcObject = this.remoteStream;
     await this.negotiateNewConnection();
   }
 
@@ -43,10 +41,9 @@ class Networking {
     await this.deleteRoom();
     await this.resetWaitingRoom();
 
-    this.audioAddedCallbackCalled = false;
     this.remoteStream = null;
     this.peerConnection = null;
-    this.roomId = null
+    this.roomId = null;
     this.role = null;
   }
 
@@ -113,7 +110,7 @@ class Networking {
         const roomId = Utils.uuidv4();
         await transaction.update(ref, { "roomId": roomId });
         this.roomId = roomId;
-        this.role = "caller"
+        this.role = "caller";
       }
     });
     await this.joinOrCreateRoom();
@@ -191,11 +188,20 @@ class Networking {
     });
   }
 
-
   registerPeerConnectionListeners() {
-    this.peerConnection.addEventListener('iceconnectionstatechange', function() {
-      if (this.peerConnection.iceConnectionState == 'disconnected') {
-        this.reinitialize();
+    this.peerConnection.addEventListener('iceconnectionstatechange', async function(event) {
+      const connectionState = this.peerConnection.iceConnectionState;
+      console.log(connectionState);
+      if (connectionState == 'disconnected') {
+        await this.finalize();
+        if(this.disconnectionCallback) {
+          await this.disconnectionCallback();
+        }
+      } else if (connectionState == 'connected') {
+        this.remoteVideoElement.srcObject = this.remoteStream;
+        if(this.connectionCallback) {
+          await this.connectionCallback();
+        }
       }
     }.bind(this));
   }
@@ -204,18 +210,13 @@ class Networking {
     this.peerConnection.addEventListener('track', async event => {
       event.streams[0].getTracks().forEach(async track => {
         this.remoteStream.addTrack(track);
-        if (this.audioAddedCallback && !this.audioAddedCallbackCalled && track.kind == 'audio') {
-          await this.audioAddedCallback();
-          this.audioAddedCallbackCalled = true;
-        }
-
       });
     });
   }
 
   addLocalStreamToPeerConnection() {
     this.localStream.getTracks().forEach(track => {
-      this.peerConnection.addTrack(track, this.localStream)
+      this.peerConnection.addTrack(track, this.localStream);
     });
   }
 
@@ -242,14 +243,5 @@ class Networking {
   }
 }
 
-async function connect(stream, localVideo, remoteVideo) {
-  const networking = new Networking(stream, localVideo, remoteVideo);
 
-  networking.audioAddedCallback = async function() {
-    await AudioFX.initReverb(networking.remoteStream);
-  }
-
-  await networking.initialize();
-}
-
-export { connect }
+export { Networking }

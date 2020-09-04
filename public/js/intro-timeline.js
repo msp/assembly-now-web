@@ -1,6 +1,7 @@
+import { Networking } from './networking.js';
+import { MediaDelay } from './media-delay.js';
 import * as AudioFX from './audio-fx.js';
 import * as BackingTrack from './backing-track.js';
-import * as Networking from './networking.js';
 import * as Preloader from './preloader.js';
 import * as GUI from './gui.js';
 
@@ -46,12 +47,30 @@ function requestCameraAccess(tl) {
         GUI.getUserMedia().then((media) => {
             let { stream, localVideo, remoteVideo } = media;
 
-            Networking.connect(stream, localVideo, remoteVideo);
+          localVideo.srcObject = stream;
 
-            GUI.hideControls();
-            GUI.fullscreen();
+          const networking = new Networking(stream, localVideo, remoteVideo);
+          const mediaDelay = new MediaDelay(stream, remoteVideo);
 
-            tl.resume();
+          networking.connectionCallback = async function() {
+            await AudioFX.initReverb(remoteVideo);
+            mediaDelay.finalize();
+          };
+
+          networking.disconnectionCallback = async function() {
+            mediaDelay.initialize();
+          };
+
+          mediaDelay.streamAddedCallback = async function() {
+            await AudioFX.initReverb(remoteVideo);
+            await networking.initialize();
+          };
+
+          mediaDelay.initialize();
+          GUI.hideControls();
+          GUI.fullscreen();
+
+          tl.resume();
         })
     });
 }

@@ -135,7 +135,6 @@ function bindOpenCameraHandler(callback) {
     const button = document.querySelector("#camera-prompt");
     button.addEventListener("click", function(event) {
         event.preventDefault();
-
         callback();
     });
 }

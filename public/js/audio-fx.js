@@ -8,7 +8,7 @@ class Reverb {
         this.output = this.context.createGain();
     }
 
-    async setup(impulseResponseUrl, dryMix = 0.9) {
+    async setup(impulseResponseUrl, dryMix = 0.7) {
         this.dryMix = dryMix;
         this.impulseResponseUrl = impulseResponseUrl;
         this._setupConnections();
@@ -93,11 +93,16 @@ async function init(responsesDictionary) {
     return audioBuffersDictionary;
 }
 
-async function initReverb(stream) {
+var reverbSource;
+
+async function initReverb(element) {
     const reverb = new Reverb(audioCtx);
-    const source = audioCtx.createMediaStreamSource(stream);
+    if(!reverbSource) {
+      reverbSource = audioCtx.createMediaElementSource(element);
+    }
     await reverb.setup("/wav/impulse-response.wav");
-    source.connect(reverb.input);
+    reverbSource.disconnect();
+    reverbSource.connect(reverb.input);
     reverb.output.connect(audioCtx.destination);
 }
 

@@ -10,9 +10,118 @@ body {
     padding: 0;
 }
 
+.screen h1 {
+    font-size: 12vw;
+    line-height: 12vw;
+    text-transform: uppercase;
+}
+
+@media screen and (min-width: 1000px) {
+    .screen h4 {
+        font-size: 4vw;
+        line-height: 4vw;
+        /* color: red; */
+    }
+
+    .screen h5 {
+        font-size: 2vw;
+        line-height: 2vw;
+        /* color: blue; */
+    }
+}
+
 a {
     color: #01871f;
     text-decoration: none;
+}
+
+
+div#videos > video {
+    background: black;
+    height: 100%;
+}
+
+.screen {
+    grid-template-rows: auto fit-content(10%) fit-content(10%);
+    justify-content: center;
+    align-content: center;
+    /* display: grid; TESTING PAGE ONLY */
+    display: none;
+    opacity: 0;
+    min-height: 100%;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 0px 16px 0px 16px;
+    /* border: 5px solid blue; */
+}
+
+#experience.screen {
+    color: #000;
+    justify-content: inherit;
+}
+
+#splash.screen {
+    font-size: larger;
+}
+
+#splash.screen #credits {
+    opacity: 0;
+}
+
+#intro-four.screen {
+    gap: 5%;
+}
+
+#intro-four.screen nav,
+#intro-four.screen #credits,
+#intro-four.screen #disclaimer {
+    opacity: 0;
+}
+
+#intro-four.screen .mdc-button--raised {
+    background-color: rgba(0, 0, 0, 0.24);
+}
+
+.screen .warning {
+    color: darksalmon;
+}
+
+/* Only if we need a subgrid?
+#videos {
+    border: 1px solid red;
+    display: grid;
+    grid-template-columns: auto;
+    justify-content: center;
+} */
+
+video {
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#localVideo {
+    filter: blur(3.35px) contrast(2.04) grayscale(1) ;
+}
+
+#remoteVideo {
+    filter: invert(100%) blur(5px);
+}
+
+#projector {
+    opacity: 0;
+    display: block;
+    /* TODO Need to calc this is JS per device */
+    min-height: 1220px;
+    margin-top: 15%;
+    background-color: #ffff00;
+    filter: blur(15px);
+}
+
+#buttons, #currentRoom {
+    background-color: #fff;;
 }
 
 #message {
@@ -76,115 +185,4 @@ button {
     margin: 0.2em 0.1em;
 }
 
-div#videos > video {
-    background: black;
-    height: 100%;
-}
-
-.screen {
-    display: grid;
-    grid-template-rows: auto fit-content(10%) fit-content(10%);
-    gap: 10%;
-    justify-content: center;
-    align-content: center;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    color: #fff;
-    text-align: center;
-    /* border: 5px solid blue; */
-}
-
-#experience.screen {
-    color: #000;
-    justify-content: inherit;
-}
-
-#splash.screen {
-    font-size: larger;
-}
-
-#splash.screen h1 {
-    font-size: 12vw;
-    line-height: 12vw;
-    text-transform: uppercase;
-}
-
-#splash.screen #credits {
-    opacity: 0;
-}
-
-#intro.screen {
-    gap: 8%;
-    font-size: larger;
-    grid-template-rows: auto auto auto;
-}
-
-#intro.screen summary,
-#intro.screen summary #intro-one,
-#intro.screen summary #intro-two,
-#intro.screen summary #housekeeping,
-#intro.screen nav,
-#intro.screen footer{
-    opacity: 0;
-}
-
-#intro.screen #housekeeping {
-    margin-top: 96px;
-}
-
-#intro.screen #camera-prompt {
-    font-size: xx-large;
-}
-
-#intro.screen .mdc-button--raised {
-    background-color: rgba(0, 0, 0, 0.24);
-}
-
-#intro.screen .warning {
-    color: darksalmon;
-}
-
-#intro.screen #disclaimer {
-    margin-top: 64px;
-}
-
-
-/* Only if we need a subgrid?
-#videos {
-    border: 1px solid red;
-    display: grid;
-    grid-template-columns: auto;
-    justify-content: center;
-} */
-
-video {
-    opacity: 0;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
-#localVideo {
-    filter: blur(3.35px) contrast(2.04) grayscale(1) ;
-}
-
-#remoteVideo {
-    filter: invert(100%) blur(5px);
-}
-
-#projector {
-    opacity: 0;
-    display: block;
-    /* TODO Need to calc this is JS per device */
-    min-height: 1220px;
-    margin-top: 15%;
-    background-color: #ffff00;
-    filter: blur(15px);
-}
-
-#buttons, #currentRoom {
-    background-color: #fff;;
-}
 

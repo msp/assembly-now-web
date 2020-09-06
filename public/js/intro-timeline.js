@@ -20,20 +20,27 @@ function play({ onComplete = () => console.log("nada") } = {}) {
         tl.to("#splash.screen", { opacity: 0, duration: 1 });
         tl.set("#splash.screen", { display: "none" });
 
-        tl.to("#intro.screen", { opacity: 1, display: "grid", duration: 1 });
-        tl.to("#intro.screen summary", { opacity: 1, duration: 1 });
-        tl.to("#intro.screen summary #intro-one", { opacity: 1, duration: 1 });
+        tl.to("#intro-one.screen ", { opacity: 1, display: "grid", duration: 1 });
         tl.to({}, pauseSeconds, {});
-        tl.to("#intro.screen summary #intro-two", { opacity: 1, duration: 1 });
+        tl.to("#intro-one.screen ", { opacity: 0, display: "none", duration: 1 });
+
+        tl.to("#intro-two.screen ", { opacity: 1, display: "grid", duration: 1 });
         tl.to({}, pauseSeconds, {});
-        tl.to("#intro.screen summary #housekeeping", { opacity: 1, duration: 1 });
-        tl.to({}, pauseSeconds - 1, {});
-        tl.to("#intro.screen footer", { opacity: 1, duration: 1 });
+        tl.to("#intro-two.screen ", { opacity: 0, display: "none", duration: 1 });
+
+        tl.to("#intro-three.screen ", { opacity: 1, display: "grid", duration: 1 });
         tl.to({}, pauseSeconds, {});
-        tl.to("#intro.screen nav", { opacity: 1, duration: 0.5, yoyo: true, repeat: 4 });
-        tl.addPause("#intro.screen", requestCameraAccess, [tl]);
-        tl.to("#intro.screen", { opacity: 0, duration: 2 });
-        tl.set("#intro.screen", { display: "none" });
+        tl.to("#intro-three.screen ", { opacity: 0, display: "none", duration: 1 });
+
+        tl.to("#intro-four.screen ", { opacity: 1, display: "grid", duration: 1 });
+        tl.to("#intro-four.screen #credits", { opacity: 1, duration: 1 });
+        tl.to({}, pauseSeconds, {});
+        tl.to("#intro-four.screen #disclaimer", { opacity: 1, duration: 1 });
+        tl.to({}, pauseSeconds, {});
+        tl.to("#intro-four.screen nav", { opacity: 1, duration: 0.5, yoyo: true, repeat: 4 });
+
+        tl.addPause("#intro-four.screen", requestCameraAccess, [tl]);
+        tl.to("#intro-four.screen", { opacity: 0, display: "none", duration: 2 });
     };
 
     tl.to("#experience.screen", { opacity: 1, display: "grid", duration: 2 });
@@ -47,30 +54,30 @@ function requestCameraAccess(tl) {
         GUI.getUserMedia().then((media) => {
             let { stream, localVideo, remoteVideo } = media;
 
-          localVideo.srcObject = stream;
+            localVideo.srcObject = stream;
 
-          const networking = new Networking(stream, localVideo, remoteVideo);
-          const mediaDelay = new MediaDelay(stream, remoteVideo);
+            const networking = new Networking(stream, localVideo, remoteVideo);
+            const mediaDelay = new MediaDelay(stream, remoteVideo);
 
-          networking.connectionCallback = async function() {
-            await AudioFX.initReverb(remoteVideo);
-            mediaDelay.finalize();
-          };
+            networking.connectionCallback = async function() {
+                await AudioFX.initReverb(remoteVideo);
+                mediaDelay.finalize();
+            };
 
-          networking.disconnectionCallback = async function() {
+            networking.disconnectionCallback = async function() {
+                mediaDelay.initialize();
+            };
+
+            mediaDelay.streamAddedCallback = async function() {
+                await AudioFX.initReverb(remoteVideo);
+                await networking.initialize();
+            };
+
             mediaDelay.initialize();
-          };
+            GUI.hideControls();
+            GUI.fullscreen();
 
-          mediaDelay.streamAddedCallback = async function() {
-            await AudioFX.initReverb(remoteVideo);
-            await networking.initialize();
-          };
-
-          mediaDelay.initialize();
-          GUI.hideControls();
-          GUI.fullscreen();
-
-          tl.resume();
+            tl.resume();
         })
     });
 }

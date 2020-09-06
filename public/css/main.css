@@ -102,13 +102,12 @@ div#videos > video {
 }
 
 #splash.screen {
-    gap: 5%;
     font-size: larger;
 }
 
 #splash.screen h1 {
-    font-size: 15vh;
-    line-height: 15vh;
+    font-size: 12vw;
+    line-height: 12vw;
     text-transform: uppercase;
 }
 

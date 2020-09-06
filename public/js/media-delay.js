@@ -10,7 +10,7 @@ class MediaDelay {
   }
 
   initialize() {
-    const mimeType = 'video/webm; codecs="opus,vp9"';
+    const mimeType = 'video/webm; codecs="opus,vp8"';
     var sourceBuffer;
     this.mediaRecorder = new MediaRecorder(this.originalStream, {
       mimeType: mimeType

@@ -26,11 +26,14 @@ function browserSupported() {
     switch (browser && browser.name) {
         case 'chrome':
         case 'safari':
+        case 'android':
+        case 'ios':
             console.log(`Great! ${browser.name} supported. Onwards..`);
             retVal = true;
             break;
 
         case 'firefox':
+        case 'fxios':
             console.log(`Sorry ${browser.name} is NOT supported, the CSS filters suck :(`);
             retVal = false;
             break;

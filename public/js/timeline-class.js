@@ -6,7 +6,7 @@ function Timeline(name, outlet) {
     this.outlet = outlet;
     this.events = new Array(1, 10, 20, 30, 200, 400, 600, 680, 860, 900, 910, 920, 925, 1000, 1100, 1200);
     this.probability = 90;
-    this.offDelay = 5;
+    this.offDelay = 50;
 
     this.eventCount = 0;
     this.localFrameCount = 1;

@@ -29,6 +29,7 @@ function browserSupported() {
         case 'android':
         case 'ios':
         case 'edge':
+        case 'edge-chromium':
             console.log(`Great! ${browser.name} supported. Onwards..`);
             retVal = true;
             break;

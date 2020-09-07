@@ -151,7 +151,7 @@ function hideControls() {
 
 function positionScreensForDebug() {
     gsap.set("#localVideo, #remoteVideo, #projector", {
-        position: "inherit", width: "33%", float: "left"
+        position: "inherit", width: "49%", float: "left"
     });
 }
 

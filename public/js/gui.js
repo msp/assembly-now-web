@@ -190,6 +190,12 @@ async function getUserMedia() {
 }
 
 function showSupportedBrowserInfo() {
+    var node = document.createElement("p");
+    var textNode = document.createTextNode(Utils.browserInfoString());
+    node.appendChild(textNode);
+
+    document.getElementById("supported-browsers").appendChild(node);
+
     gsap.to("#supported-browsers", {
         duration: 3,
         opacity: 1,

@@ -46,9 +46,9 @@ function browserSupported() {
     return retVal;
 }
 
-function browserInfo() {
-    return browser;
+function browserInfoString() {
+    return `Name: ${browser.name}, Version: ${browser.version}, OS: ${browser.os}`;
 }
 
 
-export { randomBetween, debugMode, uuidv4, browserInfo, browserSupported }
+export { randomBetween, debugMode, uuidv4, browserInfoString, browserSupported }

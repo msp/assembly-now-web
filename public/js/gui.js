@@ -81,9 +81,9 @@ function showLight2Screen(sample) {
 }
 
 function showProjector1Screen(sample) {
-    setBackgroundColour(sample.url);
-
     if (!debugMode) {
+        setBackgroundColour(sample.url);
+
         gsap.to("#projector", {
             yoyo: true,
             duration: sample.buffer.duration,

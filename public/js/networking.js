@@ -199,6 +199,11 @@ class Networking {
         }
       } else if (connectionState == 'connected') {
         this.remoteVideoElement.srcObject = this.remoteStream;
+        try {
+          await this.remoteVideoElement.play();
+        } catch(e) {
+          //don't worry, it was already playing.
+        }
         if(this.connectionCallback) {
           await this.connectionCallback();
         }
@@ -231,7 +236,7 @@ class Networking {
   }
 
   async listenForRemoteICECandidates(roomRef) {
-    const peerRole = this.role == "caller" ? "callee" : "caller"
+    const peerRole = this.role == "caller" ? "callee" : "caller";
     roomRef.collection(peerRole + 'Candidates').onSnapshot(snapshot => {
       snapshot.docChanges().forEach(async change => {
         if (change.type === 'added') {

@@ -13,6 +13,10 @@ class MediaDelay {
     if(!window.MediaRecorder) {
       this.videoElement.srcObject = this.originalStream;
       this.videoElement.muted = true;
+      if(this.streamAddedCallback && !this.streamAddedCallbackCalled) {
+        this.streamAddedCallback();
+        this.streamAddedCallbackCalled = true;
+      }
       return;
     }
     const mimeType = 'video/webm; codecs="opus,vp8"';
@@ -47,8 +51,11 @@ class MediaDelay {
 
   finalize() {
     if(!window.MediaRecorder) {
-      this.videoElement.srcObject = null;
+      if (this.videoElement.srcObject == this.originalStream) {
+        this.videoElement.srcObject = null;
+      }
       this.videoElement.muted = false;
+      this.streamAddedCallbackCalled = false;
       return;
     }
     this.mediaRecorder.ondataavailable = null;

@@ -114,8 +114,8 @@ video {
     opacity: 0;
     display: block;
     /* TODO Need to calc this is JS per device */
-    min-height: 1220px;
-    margin-top: 15%;
+    min-height: 80vh;
+    margin-top: 5%;
     background-color: #ffff00;
     filter: blur(15px);
 }

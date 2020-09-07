@@ -10,6 +10,11 @@ class MediaDelay {
   }
 
   initialize() {
+    if(!window.MediaRecorder) {
+      this.videoElement.srcObject = this.originalStream;
+      this.videoElement.muted = true;
+      return;
+    }
     const mimeType = 'video/webm; codecs="opus,vp8"';
     var sourceBuffer;
     this.mediaRecorder = new MediaRecorder(this.originalStream, {
@@ -41,6 +46,11 @@ class MediaDelay {
   }
 
   finalize() {
+    if(!window.MediaRecorder) {
+      this.videoElement.srcObject = null;
+      this.videoElement.muted = false;
+      return;
+    }
     this.mediaRecorder.ondataavailable = null;
     this.mediaRecorder.stop();
     this.delayedStream = null;

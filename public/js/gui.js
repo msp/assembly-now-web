@@ -189,6 +189,17 @@ async function getUserMedia() {
     }
 }
 
+function showSupportedBrowserInfo() {
+    gsap.to("#supported-browsers", {
+        duration: 3,
+        opacity: 1,
+        display: 'inherit',
+    });
+
+    gsap.set("#splash.screen #loading-wrapper", { opacity: 0 });
+    gsap.set("#splash.screen #loading-count", { opacity: 0 });
+}
+
 export {
     activatePlayButton,
     activateStopButton,
@@ -201,5 +212,6 @@ export {
     showLight1Screen,
     showLight2Screen,
     showProjector1Screen,
+    showSupportedBrowserInfo,
     updateLoaderStats,
 };

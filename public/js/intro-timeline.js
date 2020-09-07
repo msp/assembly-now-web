@@ -87,16 +87,20 @@ function requestCameraAccess(tl) {
 }
 
 function runPreloader(tl) {
-    GUI.updateLoaderStats(
-        0,
-        Preloader.calculateTotalRequestedIn(AudioFX.fileDictionary())
-    );
+    if (Utils.browserSupported()) {
+        GUI.updateLoaderStats(
+            0,
+            Preloader.calculateTotalRequestedIn(AudioFX.fileDictionary())
+        );
 
-    Preloader.run(AudioFX.fileDictionary()).then((responses) => {
-        AudioFX.init(responses).then((audioBuffers) => {
-            tl.resume();
+        Preloader.run(AudioFX.fileDictionary()).then((responses) => {
+            AudioFX.init(responses).then((audioBuffers) => {
+                tl.resume();
+            });
         });
-    });
+    } else {
+        GUI.showSupportedBrowserInfo();
+    }
 }
 
 export { play };

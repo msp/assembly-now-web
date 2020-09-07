@@ -1,3 +1,7 @@
+import * as Detect from './detect.js'
+
+const browser = Detect.detect();
+
 function randomBetween(low, high) {
     var r = Math.floor((Math.random() * high) + low);
     return r;
@@ -15,5 +19,36 @@ function uuidv4() {
     });
 }
 
+function browserSupported() {
+    console.log("browser", browser);
+    let retVal = false;
 
-export { randomBetween, debugMode, uuidv4 }
+    switch (browser && browser.name) {
+        case 'chrome':
+        case 'safari':
+            console.log(`Great! ${browser.name} supported. Onwards..`);
+            retVal = true;
+            break;
+
+        case 'firefox':
+            console.log(`Sorry ${browser.name} is NOT supported, the CSS filters suck :(`);
+            retVal = false;
+            break;
+
+        // TODO - test Edge
+        // case 'edge':
+        //     break;
+
+        default:
+            console.log(`Sorry ${browser.name} is NOT supported at this time :(`);
+    }
+
+    return retVal;
+}
+
+function browserInfo() {
+    return browser;
+}
+
+
+export { randomBetween, debugMode, uuidv4, browserInfo, browserSupported }

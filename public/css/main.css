@@ -35,6 +35,16 @@ a {
     text-decoration: none;
 }
 
+mark {
+    background-color: white;
+    color: darksalmon;
+    padding: 32px;
+}
+
+mark li {
+    text-decoration: none;
+    list-style-type: none;
+}
 
 div#videos > video {
     background: black;
@@ -67,6 +77,15 @@ div#videos > video {
 
 #splash.screen #credits {
     opacity: 0;
+}
+
+#splash.screen mark {
+    display: none;
+    opacity: 0;
+}
+
+#splash.screen ul {
+    padding-left: 0px;
 }
 
 #intro-four.screen {

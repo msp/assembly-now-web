@@ -47,13 +47,23 @@
 <body class="mdc-typography">
     <section id="splash" class="screen mdc-typography--body1">
         <h1 id="title" class="mdc-typography--headline1">######## ###</h1>
+        <mark id="supported-browsers">
+            <p class="">Sorry, you'll need to use a subset of available browsers to
+                enjoy this
+                experience. We're happy with the results on either:</p>
+            <ul>
+                <li>Chrome or Safari on a desktop/laptop</li>
+                <li>Safari on iOS</li>
+                <li>Chrome on Android</li>
+            </ul>
+        </mark>
         <div id="loading-wrapper">
             <div class="lds-ripple">
                 <div></div>
                 <div></div>
             </div>
         </div>
-        <h3><span id="totalLoaded">0</span>/<span id="totalRequested">0</span></h3>
+        <h3 id="loading-count"><span id="totalLoaded">0</span>/<span id="totalRequested">0</span></h3>
     </section>
 
     <section id="intro-one" class="screen">

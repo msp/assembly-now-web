@@ -1,6 +1,7 @@
 import { Networking } from './networking.js';
 import { MediaDelay } from './media-delay.js';
 import * as AudioFX from './audio-fx.js';
+import * as BackingTrack from './backing-track.js';
 import * as Preloader from './preloader.js';
 import * as GUI from './gui.js';
 import * as Utils from './utils.js';
@@ -64,6 +65,9 @@ function requestCameraAccess(tl) {
 
 function startExperience(tl) {
     GUI.bindStartExperienceHandler(function() {
+        GUI.fullscreen();
+        BackingTrack.play();
+
         let { stream, localVideo, remoteVideo } = GUI.getPermittedUserMedia()
 
         localVideo.srcObject = stream;
@@ -88,8 +92,6 @@ function startExperience(tl) {
         mediaDelay.initialize();
 
         GUI.hideControls();
-        GUI.fullscreen();
-        BackingTrack.play();
 
         tl.resume();
     });

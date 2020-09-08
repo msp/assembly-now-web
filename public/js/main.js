@@ -9,9 +9,7 @@ function main() {
 
     Intro.play({
         onComplete: () => {
-            GUI.fullscreen();
             ExperienceTimelines.play();
-            BackingTrack.play();
         }
     });
 }

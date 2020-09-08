@@ -86,7 +86,10 @@ function startExperience(tl) {
         };
 
         mediaDelay.initialize();
+
         GUI.hideControls();
+        GUI.fullscreen();
+        BackingTrack.play();
 
         tl.resume();
     });

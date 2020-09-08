@@ -87,17 +87,18 @@ div#videos > video {
     padding-left: 0px;
 }
 
-#intro-four.screen {
+#intro-five.screen {
     gap: 5%;
 }
 
 #intro-four.screen nav,
-#intro-four.screen #credits,
-#intro-four.screen #disclaimer {
+#intro-five.screen nav,
+#intro-five.screen #credits,
+#intro-five.screen #disclaimer {
     opacity: 0;
 }
 
-#intro-four.screen .mdc-button--raised {
+#intro-five.screen .mdc-button--raised {
     background-color: rgba(0, 0, 0, 0.24);
 }
 

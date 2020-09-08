@@ -14,6 +14,7 @@ const constraints = {
 };
 
 const debugMode = Utils.debugMode();
+let permittedUserMedia = null;
 
 function init() {
     mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
@@ -139,6 +140,14 @@ function bindOpenCameraHandler(callback) {
     });
 }
 
+function bindStartExperienceHandler(callback) {
+    const button = document.querySelector("#experience-prompt");
+    button.addEventListener("click", function(event) {
+        event.preventDefault();
+        callback();
+    });
+}
+
 function showControls() {
     gsap.set("#buttons", { opacity: 1 });
 }
@@ -177,16 +186,22 @@ function highlightBorder(screen) {
     }
 }
 
-async function getUserMedia() {
+async function requestUserMedia() {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
     const localVideo = document.querySelector('#localVideo');
     const remoteVideo = document.querySelector('#remoteVideo');
 
-    return {
+    permittedUserMedia = {
         stream,
         localVideo,
         remoteVideo
     }
+
+    return permittedUserMedia
+}
+
+function getPermittedUserMedia() {
+    return permittedUserMedia;
 }
 
 function showSupportedBrowserInfo() {
@@ -210,10 +225,12 @@ export {
     activatePlayButton,
     activateStopButton,
     bindOpenCameraHandler,
+    bindStartExperienceHandler,
     fullscreen,
-    getUserMedia,
+    getPermittedUserMedia,
     hideControls,
     init,
+    requestUserMedia,
     showAllScreens,
     showLight1Screen,
     showLight2Screen,

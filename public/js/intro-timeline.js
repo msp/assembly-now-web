@@ -1,7 +1,6 @@
 import { Networking } from './networking.js';
 import { MediaDelay } from './media-delay.js';
 import * as AudioFX from './audio-fx.js';
-import * as BackingTrack from './backing-track.js';
 import * as Preloader from './preloader.js';
 import * as GUI from './gui.js';
 import * as Utils from './utils.js';
@@ -37,52 +36,59 @@ function play({ onComplete = () => console.log("nada") } = {}) {
     };
 
     tl.to("#intro-four.screen ", { opacity: 1, display: "grid", duration: screenSeconds });
-    tl.to("#intro-four.screen #credits", { opacity: 1, duration: screenSeconds });
-    tl.to({}, pauseSeconds, {});
-    tl.to("#intro-four.screen #disclaimer", { opacity: 1, duration: screenSeconds });
     tl.to({}, pauseSeconds, {});
     tl.to("#intro-four.screen nav", { opacity: 1, duration: screenSeconds / 2, yoyo: true, repeat: 4 });
-
     tl.addPause("#intro-four.screen", requestCameraAccess, [tl]);
-    tl.to("#intro-four.screen", { opacity: 0, display: "none", duration: screenSeconds * 2 });
+    tl.to("#intro-four.screen ", { opacity: 0, display: "none", duration: screenSeconds });
 
+    tl.to("#intro-five.screen ", { opacity: 1, display: "grid", duration: screenSeconds });
+    tl.to("#intro-five.screen #credits", { opacity: 1, duration: screenSeconds });
+    tl.to({}, pauseSeconds, {});
+    tl.to("#intro-five.screen #disclaimer", { opacity: 1, duration: screenSeconds });
+    tl.to({}, pauseSeconds, {});
+    tl.to("#intro-five.screen nav", { opacity: 1, duration: screenSeconds / 2, yoyo: true, repeat: 4 });
+
+    tl.addPause("#intro-five.screen", startExperience, [tl]);
+    tl.to("#intro-five.screen", { opacity: 0, display: "none", duration: screenSeconds * 2 });
 
     tl.to("#experience.screen", { opacity: 1, display: "grid", duration: screenSeconds * 2 });
 }
 
 function requestCameraAccess(tl) {
     GUI.bindOpenCameraHandler(function() {
-        // Keep outside of async so it works in Safari!
-        BackingTrack.play();
-
-        GUI.getUserMedia().then((media) => {
-            let { stream, localVideo, remoteVideo } = media;
-
-            localVideo.srcObject = stream;
-
-            const networking = new Networking(stream, localVideo, remoteVideo);
-            const mediaDelay = new MediaDelay(stream, remoteVideo);
-
-            networking.connectionCallback = async function() {
-                await AudioFX.initReverb(remoteVideo);
-                mediaDelay.finalize();
-            };
-
-            networking.disconnectionCallback = async function() {
-                mediaDelay.initialize();
-            };
-
-            mediaDelay.streamAddedCallback = async function() {
-                await AudioFX.initReverb(remoteVideo);
-                await networking.initialize();
-            };
-
-            mediaDelay.initialize();
-            GUI.hideControls();
-            GUI.fullscreen();
-
+        GUI.requestUserMedia().then(() => {
             tl.resume();
         })
+    });
+}
+
+function startExperience(tl) {
+    GUI.bindStartExperienceHandler(function() {
+        let { stream, localVideo, remoteVideo } = GUI.getPermittedUserMedia()
+
+        localVideo.srcObject = stream;
+
+        const networking = new Networking(stream, localVideo, remoteVideo);
+        const mediaDelay = new MediaDelay(stream, remoteVideo);
+
+        networking.connectionCallback = async function() {
+            await AudioFX.initReverb(remoteVideo);
+            mediaDelay.finalize();
+        };
+
+        networking.disconnectionCallback = async function() {
+            mediaDelay.initialize();
+        };
+
+        mediaDelay.streamAddedCallback = async function() {
+            await AudioFX.initReverb(remoteVideo);
+            await networking.initialize();
+        };
+
+        mediaDelay.initialize();
+        GUI.hideControls();
+
+        tl.resume();
     });
 }
 

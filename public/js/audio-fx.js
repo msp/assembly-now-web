@@ -1,5 +1,5 @@
 import * as Utils from './utils.js';
-import sac from 'https://dev.jspm.io/npm:standardized-audio-context';
+import SAC from 'https://dev.jspm.io/npm:standardized-audio-context';
 
 class Reverb {
     constructor(audioContext) {
@@ -79,7 +79,7 @@ const Projector1Files = [
     "https://dl.dropboxusercontent.com/s/rarws687ckqr1b5/BugTones-20.mp3?raw=1",
 ]
 
-const audioCtx = new sac.AudioContext();
+const audioCtx = new SAC.AudioContext();
 const audioBuffersDictionary = {
     light1: [],
     light2: [],
@@ -97,8 +97,8 @@ var reverbSource;
 
 async function initReverb(element) {
     const reverb = new Reverb(audioCtx);
-    if(!reverbSource) {
-      reverbSource = audioCtx.createMediaElementSource(element);
+    if (!reverbSource) {
+        reverbSource = audioCtx.createMediaElementSource(element);
     }
     await reverb.setup("/wav/impulse-response.wav");
     reverbSource.disconnect();

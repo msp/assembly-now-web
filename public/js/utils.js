@@ -1,4 +1,5 @@
 import * as Detect from './detect.js'
+import SAC from 'https://dev.jspm.io/npm:standardized-audio-context';
 
 const browser = Detect.detect();
 
@@ -19,9 +20,9 @@ function uuidv4() {
     });
 }
 
-function browserSupported() {
+async function browserSupported() {
     console.log("browser", browser);
-    let retVal = false;
+    let supported = false;
 
     switch (browser && browser.name) {
         case 'chrome':
@@ -30,25 +31,30 @@ function browserSupported() {
         case 'ios':
         case 'edge':
         case 'edge-chromium':
-            console.log(`Great! ${browser.name} supported. Onwards..`);
-            retVal = true;
-            break;
+            const sacSupported = await SAC.isSupported();
+            if (sacSupported) {
+                console.log(`Great! ${browser.name} supported. Onwards..`);
+                supported = true;
+                break;
+
+            } else {
+                console.log(`Shame :/ ${browser.name} is supported BUT we need a newer version than ${browser.version}`);
+                supported = false;
+                break;
+
+            }
 
         case 'firefox':
         case 'fxios':
             console.log(`Sorry ${browser.name} is NOT supported, the CSS filters suck :(`);
-            retVal = false;
+            supported = false;
             break;
-
-        // TODO - test Edge
-        // case 'edge':
-        //     break;
 
         default:
             console.log(`Sorry ${browser.name} is NOT supported at this time :(`);
     }
 
-    return retVal;
+    return supported;
 }
 
 function browserInfoString() {

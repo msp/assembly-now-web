@@ -32,13 +32,14 @@ function play({ onComplete = () => console.log("nada") } = {}) {
         tl.to("#intro-two.screen ", { opacity: 0, display: "none", duration: screenSeconds });
 
         tl.to("#intro-three.screen ", { opacity: 1, display: "grid", duration: screenSeconds });
+        tl.to("#intro-three.screen #headphones", { opacity: 1, duration: screenSeconds / 3, yoyo: true, repeat: 4 });
         tl.to({}, pauseSeconds, {});
         tl.to("#intro-three.screen ", { opacity: 0, display: "none", duration: screenSeconds });
     };
 
     tl.to("#intro-four.screen ", { opacity: 1, display: "grid", duration: screenSeconds });
     tl.to({}, pauseSeconds, {});
-    tl.to("#intro-four.screen nav", { opacity: 1, duration: screenSeconds / 2, yoyo: true, repeat: 4 });
+    tl.to("#intro-four.screen nav", { opacity: 1, duration: screenSeconds / 3, yoyo: true, repeat: 4 });
     tl.addPause("#intro-four.screen", requestCameraAccess, [tl]);
     tl.to("#intro-four.screen ", { opacity: 0, display: "none", duration: screenSeconds });
 
@@ -46,8 +47,8 @@ function play({ onComplete = () => console.log("nada") } = {}) {
     tl.to("#intro-five.screen #credits", { opacity: 1, duration: screenSeconds });
     tl.to({}, pauseSeconds, {});
     tl.to("#intro-five.screen #disclaimer", { opacity: 1, duration: screenSeconds });
-    tl.to({}, pauseSeconds, {});
-    tl.to("#intro-five.screen nav", { opacity: 1, duration: screenSeconds / 2, yoyo: true, repeat: 4 });
+    tl.to({}, pauseSeconds / 3, {});
+    tl.to("#intro-five.screen nav", { opacity: 1, duration: screenSeconds / 3, yoyo: true, repeat: 4 });
 
     tl.addPause("#intro-five.screen", startExperience, [tl]);
     tl.to("#intro-five.screen", { opacity: 0, display: "none", duration: screenSeconds * 2 });

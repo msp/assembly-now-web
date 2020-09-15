@@ -97,8 +97,10 @@ function startExperience(tl) {
     });
 }
 
-function runPreloader(tl) {
-    if (Utils.browserSupported()) {
+async function runPreloader(tl) {
+    const browserSupported = await Utils.browserSupported()
+
+    if (browserSupported) {
         GUI.updateLoaderStats(
             0,
             Preloader.calculateTotalRequestedIn(AudioFX.fileDictionary())

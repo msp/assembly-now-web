@@ -10,27 +10,52 @@ body {
 }
 
 .screen h1 {
-    font-size: 12vw;
-    line-height: 12vw;
+    font-size: 11vw;
+    line-height: 11vw;
     text-transform: uppercase;
 }
 
 @media screen and (min-width: 1000px) {
     .screen h4 {
         font-size: 4vw;
-        line-height: 4vw;
+        line-height: 4.5vw;
         /* color: red; */
     }
 
     .screen h5 {
         font-size: 2vw;
-        line-height: 2vw;
+        line-height: 3vw;
         /* color: blue; */
+    }
+
+    .screen#intro-five p {
+        font-size: 1.5vw;
+        line-height: 2.5vw;
+    }
+
+    .screen#intro-five #disclaimer p {
+        font-size: 1.2vw;
+        line-height: 2.2vw;
+    }
+
+    button.mdc-button {
+        padding: 32px;
+        height: initial;
+    }
+
+    button.mdc-button .mdc-button__icon {
+        font-size: 2vw;
+        margin-right: 32px;
+        height: initial;
+    }
+
+    button.mdc-button .mdc-button__label {
+        font-size: 2vw;
     }
 }
 
 a {
-    color: #01871f;
+    color: #65D17E;
     text-decoration: none;
 }
 
@@ -54,7 +79,8 @@ div#videos > video {
     grid-template-rows: auto fit-content(10%) fit-content(10%);
     justify-content: center;
     align-content: center;
-    /* display: grid; TESTING PAGE ONLY */
+    /* TESTING PAGE ONLY */
+    /* display: grid; */
     display: none;
     opacity: 0;
     min-height: 100%;
@@ -62,7 +88,12 @@ div#videos > video {
     color: #fff;
     text-align: center;
     padding: 0px 16px 0px 16px;
-    /* border: 5px solid blue; */
+}
+
+@media screen and (min-width: 1000px) {
+    .screen {
+        padding: 0px 128px 0px 128px;
+    }
 }
 
 #experience.screen {
@@ -87,6 +118,32 @@ div#videos > video {
     padding-left: 0px;
 }
 
+#intro-three.screen #headphones {
+    opacity: 0;
+    border: 1px dotted darksalmon;
+    padding: 32px 16px 0px 16px;
+}
+
+@media screen and (min-width: 1000px) {
+    #intro-three.screen #headphones {
+        border-width: 4px;
+        display: flex;
+        justify-content: center;
+        padding: 64px;
+    }
+}
+
+#intro-three.screen #headphones img {
+    color: darksalmon;
+    margin-right: 0px;
+}
+
+@media screen and (min-width: 1000px) {
+    #intro-three.screen #headphones img {
+        margin-right: 48px;
+    }
+}
+
 #intro-five.screen {
     gap: 5%;
 }
@@ -96,10 +153,6 @@ div#videos > video {
 #intro-five.screen #credits,
 #intro-five.screen #disclaimer {
     opacity: 0;
-}
-
-#intro-five.screen .mdc-button--raised {
-    background-color: rgba(0, 0, 0, 0.24);
 }
 
 .screen .warning {
@@ -200,8 +253,5 @@ video {
     }
 }
 
-button {
-    margin: 0.2em 0.1em;
-}
 
 

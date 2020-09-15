@@ -94,9 +94,11 @@
                 virtual
                 space - please behave respectfully, as if you were in the gallery IRL.
             </h4>
-            <h5 class="mdc-typography--headline5 warning">We STONGLY recommend headphones to avoid feedback!
-            </h5>
-
+            <div id="headphones">
+                <img src="/images/headphones-human.svg" alt="headphones" />
+                <h5 class="mdc-typography--headline5 warning">We STRONGLY recommend headphones to avoid feedback!
+                </h5>
+            </div>
         </summary>
     </section>
 
@@ -104,48 +106,47 @@
         <summary>
             <h4 id="intro" class="mdc-typography--headline4">
                 We need access to your camera and microphone for this experience.
-                Please click below to and follow the prompt in your browser.
+                Please click below and follow the prompt in your browser.
             </h4>
 
             <nav>
-                <h4 class="mdc-typography--headline4">
-                    <a href="javascript:void(0)" id="camera-prompt">
-                        Allow camera and microphone
-                    </a>
-                </h4>
+                <button class="mdc-button mdc-button--raised" id="camera-prompt">
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">camera_front</i>
+                    <span class="mdc-button__label">Allow camera & microphone</span>
+                </button>
             </nav>
-
         </summary>
     </section>
 
     <section id="intro-five" class="screen">
-        <nav>
-            <h4 class="mdc-typography--headline4">
-                <a href="javascript:void(0)" id="experience-prompt">
-                    START HERE
-                </a>
-            </h4>
-        </nav>
-
         <section id="credits">
-            <p>Assembly Now is commissioned by Metro Arts and is showcased as part of the Brisbane Festival.</p>
-
-            <p>The project is a collaboration between <a href="http://sallygolding.com/" target="_blank">Sally
+            <p>Assembly Now is commissioned by Metro Arts and showcased as part of the Brisbane Festival.
+                The project is a collaboration between <a href="http://sallygolding.com/" target="_blank">Sally
                     Golding</a>
                 and <a href="http://spatial.infrasonics.net/" target="_blank">Spatial</a>
                 and can be <a href="https://metroarts.com.au/assembly-now/" target="_blank">visited</a> 3rd to 27th
                 September 2020.
             </p>
 
-            <p>The following web reinterpretation is a collaboration with <a href="http://timcowlishaw.co.uk/"
+            <p>
+                The following web reinterpretation is a collaboration with <a href="http://timcowlishaw.co.uk/"
                     target="_blank">Tim Cowlishaw</a> and produced by <a href="https://cenatus.org"
-                    target="_blank">Cenatus.</a></p>
+                    target="_blank">Cenatus</a> as an <a href="https://github.com/msp/assembly-now-web"
+                    target="_blank">open source</a> project.
+            </p>
 
             <p>This project has been assisted by the Australian Government through the Australia Council, its arts
                 funding
                 and
                 advisory body.</p>
         </section>
+
+        <nav>
+            <button class="mdc-button mdc-button--raised" id="experience-prompt">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">play_arrow</i>
+                <span class="mdc-button__label">Start here</span>
+            </button>
+        </nav>
 
         <section id="disclaimer">
             <p><span style="color: red;">TODO:</span> Link to disclaimer and data usage</p>

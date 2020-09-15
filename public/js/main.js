@@ -7,7 +7,9 @@ function main() {
     GUI.init();
 
     Intro.play({
-        onComplete: ExperienceTimelines.play
+        onComplete: () => {
+            ExperienceTimelines.play();
+        }
     });
 }
 

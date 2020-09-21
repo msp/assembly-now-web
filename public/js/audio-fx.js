@@ -38,14 +38,23 @@ class Reverb {
 
 const light1Files = [
     "https://dl.dropboxusercontent.com/s/cly94x13trrzodg/20200901-assembly-now-narrative-01.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/z931lm6zg5232t9/20200901-assembly-now-narrative-03.mp3?raw=1",
     "https://dl.dropboxusercontent.com/s/msys9ijcrdr0nha/20200901-assembly-now-narrative-04.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/3t0dpquollvvub5/20200901-assembly-now-narrative-05.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/lp0s4gvg4xviqm7/20200901-assembly-now-narrative-06.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/2nip8gbm8pyh1t2/20200901-assembly-now-narrative-07.mp3?raw=1",
     "https://dl.dropboxusercontent.com/s/atqhy9vqljqp2j5/20200901-assembly-now-narrative-08.mp3?raw=1",
     "https://dl.dropboxusercontent.com/s/031v5t7b9o3rvhj/20200901-assembly-now-narrative-09.mp3?raw=1",
     "https://dl.dropboxusercontent.com/s/j9ttlm8v5540xf2/20200901-assembly-now-narrative-10.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/sdhe62exovnfagv/20200901-assembly-now-narrative-11.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/jusl5j4ex6f5saz/20200901-assembly-now-narrative-12.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/1owz8911vgf18mr/20200901-assembly-now-narrative-13.mp3?raw=1",
     "https://dl.dropboxusercontent.com/s/d3zq18vkjpd120n/20200901-assembly-now-narrative-14.mp3?raw=1",
     "https://dl.dropboxusercontent.com/s/evozgto9eu5wtgs/20200901-assembly-now-narrative-16.mp3?raw=1",
     "https://dl.dropboxusercontent.com/s/7ekvha8ovqpe6qb/20200901-assembly-now-narrative-17.mp3?raw=1",
     "https://dl.dropboxusercontent.com/s/6delezzqaaq8b2h/20200901-assembly-now-narrative-18.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/bry1s0ia81tr8ui/20200901-assembly-now-narrative-19.mp3?raw=1",
+    "https://dl.dropboxusercontent.com/s/xzgvjyqv44c2ckq/20200901-assembly-now-narrative-20.mp3?raw=1",
     "https://dl.dropboxusercontent.com/s/hjkjtzp98ssvoxn/20200901-assembly-now-narrative-21.mp3?raw=1"
 ]
 

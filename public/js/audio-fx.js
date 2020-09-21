@@ -159,12 +159,6 @@ async function decodeFile(response) {
     const arrayBuffer = await response.arrayBuffer();
     const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
 
-    // Looks like Safari needs some callbacks?!
-    // const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer, function(buffer) {
-    //     console.log("decodeAudioData. Is this safari only?!");
-    // }, function(e) {
-    //     console.log("Error with decoding audio data" + e.err);
-    // });
     return audioBuffer;
 }
 

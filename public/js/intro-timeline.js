@@ -8,7 +8,7 @@ import * as Utils from './utils.js';
 
 let debugMode = Utils.debugMode();
 let runIntro = !debugMode;
-let pauseSeconds = debugMode ? 1 : 5
+let pauseSeconds = debugMode ? 1 : 7
 let screenSeconds = debugMode ? 0.2 : 1
 
 function play({ onComplete = () => console.log("nada") } = {}) {

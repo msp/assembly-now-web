@@ -38,7 +38,7 @@ function play({ onComplete = () => console.log("nada") } = {}) {
     };
 
     tl.to("#intro-four.screen ", { opacity: 1, display: "grid", duration: screenSeconds });
-    tl.to({}, pauseSeconds, {});
+    tl.to({}, pauseSeconds / 2, {});
     tl.to("#intro-four.screen nav", { opacity: 1, duration: screenSeconds / 3, yoyo: true, repeat: 4 });
     tl.addPause("#intro-four.screen", requestCameraAccess, [tl]);
     tl.to("#intro-four.screen ", { opacity: 0, display: "none", duration: screenSeconds });

@@ -76,8 +76,8 @@ function startExperience(tl) {
         const networking = new Networking(stream, localVideo, remoteVideo);
         const mediaDelay = new MediaDelay(stream, remoteVideo);
 
-        networking.connectionCallback = async function() {
-            await AudioFX.initReverb(remoteVideo);
+        networking.connectionCallback = async function(remoteStream) {
+            await AudioFX.initReverbFromStream(remoteStream);
             mediaDelay.finalize();
         };
 
@@ -86,7 +86,7 @@ function startExperience(tl) {
         };
 
         mediaDelay.streamAddedCallback = async function() {
-            await AudioFX.initReverb(remoteVideo);
+            await AudioFX.initReverbFromElement(remoteVideo);
             await networking.initialize();
         };
 

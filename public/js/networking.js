@@ -205,7 +205,7 @@ class Networking {
           //don't worry, it was already playing.
         }
         if(this.connectionCallback) {
-          await this.connectionCallback();
+          await this.connectionCallback(this.remoteStream);
         }
       }
     }.bind(this));

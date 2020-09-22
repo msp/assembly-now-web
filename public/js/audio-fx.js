@@ -102,17 +102,40 @@ async function init(responsesDictionary) {
     return audioBuffersDictionary;
 }
 
-var reverbSource;
+var reverbElementSource;
+var reverbStreamSource;
+var reverb;
 
-async function initReverb(element) {
-    const reverb = new Reverb(audioCtx);
-    if (!reverbSource) {
-        reverbSource = audioCtx.createMediaElementSource(element);
-    }
+async function initReverbFromStream(stream) {
+  if(!reverb) {
+    reverb = new Reverb(audioCtx);
     await reverb.setup("/wav/impulse-response.wav");
-    reverbSource.disconnect();
-    reverbSource.connect(reverb.input);
     reverb.output.connect(audioCtx.destination);
+  }
+  if(reverbStreamSource) {
+    reverbStreamSource.disconnect();
+  }
+  if(reverbElementSource) {
+    reverbElementSource.disconnect();
+  }
+  reverbStreamSource = audioCtx.createMediaStreamSource(stream);
+  reverbStreamSource.connect(reverb.input);
+}
+
+async function initReverbFromElement(element) {
+    if(!reverb) {
+      reverb = new Reverb(audioCtx);
+      await reverb.setup("/wav/impulse-response.wav");
+      reverb.output.connect(audioCtx.destination);
+    }
+    if(reverbStreamSource) {
+      reverbStreamSource.disconnect();
+    }
+    if (!reverbElementSource) {
+        reverbElementSource = audioCtx.createMediaElementSource(element);
+    }
+    reverbElementSource.disconnect();
+    reverbElementSource.connect(reverb.input);
 }
 
 function play(audioBuffer) {
@@ -162,4 +185,4 @@ async function decodeFile(response) {
     return audioBuffer;
 }
 
-export { init, initReverb, play, playRandomFor, fileDictionary };
+export { init, initReverbFromStream, initReverbFromElement, play, playRandomFor, fileDictionary };

@@ -33,11 +33,10 @@ class MediaDelay {
     delayedStream.addEventListener('sourceopen', async function(event) {
       sourceBuffer = delayedStream.addSourceBuffer(mimeType);
       if(this.streamAddedCallback && !this.streamAddedCallbackCalled) {
-        await this.streamAddedCallback();
         this.streamAddedCallbackCalled = true;
+        await this.streamAddedCallback();
       }
     }.bind(this), false);
-    this.videoElement.play();
     this.mediaRecorder.ondataavailable = function(event) {
       var reader = new FileReader();
       reader.addEventListener("loadend", function() {
@@ -46,7 +45,7 @@ class MediaDelay {
       });
       reader.readAsArrayBuffer(event.data);
     };
-    this.mediaRecorder.start(10000);
+    this.mediaRecorder.start(3000);
   }
 
   finalize() {
@@ -58,8 +57,10 @@ class MediaDelay {
       this.streamAddedCallbackCalled = false;
       return;
     }
-    this.mediaRecorder.ondataavailable = null;
-    this.mediaRecorder.stop();
+    if(this.mediaRecorder) {
+      this.mediaRecorder.ondataavailable = null;
+      this.mediaRecorder.stop();
+    }
     this.delayedStream = null;
     this.mediaRecorder = null;
     this.streamAddedCallbackCalled = false;

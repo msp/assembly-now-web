@@ -82,6 +82,7 @@ function startExperience(tl) {
         };
 
         networking.disconnectionCallback = async function() {
+            mediaDelay.finalize();
             mediaDelay.initialize();
         };
 

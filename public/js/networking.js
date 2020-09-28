@@ -21,6 +21,7 @@ class Networking {
 
     this.connectionCallback = null;
     this.disconnectionCallback = null;
+    this.connectionEstablished = false;
 
     this.remoteStream = null;
     this.peerConnection = null;
@@ -45,6 +46,10 @@ class Networking {
     this.peerConnection = null;
     this.roomId = null;
     this.role = null;
+    this.connectionEstablished = false;
+    if(this.disconnectionCallback) {
+      await this.disconnectionCallback();
+    }
   }
 
 
@@ -112,6 +117,24 @@ class Networking {
         this.roomId = roomId;
         this.role = "caller";
       }
+      if(this.role == "caller") {
+        window.setTimeout(async function() {
+          if(!this.connectionEstablished) {
+            console.log("connection timed out after 30s. Trying again...");
+            await this.db.runTransaction(async transaction => {
+              const existingRoom = await transaction.get(ref);
+              if(!existingRoom.exists) {
+                throw (new Error("waiting_room doc does not exist"));
+              }
+              if(existingRoom.data().roomId == this.roomId) {
+                await transaction.update(ref, { "roomId": ""});
+              }
+            });
+            this.finalize();
+          }
+        }.bind(this), 30000);
+      }
+      console.log(this.role, this.roomId);
     });
     await this.joinOrCreateRoom();
   }
@@ -194,10 +217,8 @@ class Networking {
       console.log(connectionState);
       if (connectionState == 'disconnected') {
         await this.finalize();
-        if(this.disconnectionCallback) {
-          await this.disconnectionCallback();
-        }
       } else if (connectionState == 'connected') {
+        this.connectionEstablished = true;
         this.remoteVideoElement.srcObject = this.remoteStream;
         try {
           await this.remoteVideoElement.play();

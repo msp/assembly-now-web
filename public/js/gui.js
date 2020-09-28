@@ -115,6 +115,7 @@ function sampleCalled(name, url) {
 function addEventListeners() {
     document.querySelector('#playBtn').addEventListener('click', ExperienceTimelines.play);
     document.querySelector('#stopBtn').addEventListener('click', ExperienceTimelines.stop);
+    window.addEventListener('resize', constrainVideoWidth);
 }
 
 function fullscreen() {
@@ -130,6 +131,11 @@ function fullscreen() {
             elem.msRequestFullscreen();
         }
     }
+}
+
+function constrainVideoWidth() {
+    gsap.set("#localVideo", { width: window.innerWidth });
+    gsap.set("#remoteVideo", { width: window.innerWidth });
 }
 
 function bindOpenCameraHandler(callback) {
@@ -226,6 +232,7 @@ export {
     activateStopButton,
     bindOpenCameraHandler,
     bindStartExperienceHandler,
+    constrainVideoWidth,
     fullscreen,
     getPermittedUserMedia,
     hideControls,

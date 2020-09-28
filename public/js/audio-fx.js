@@ -171,7 +171,7 @@ function fileDictionary() {
 
 async function decodeFilesFor(screen, responsesDictionary) {
     await Promise.all(responsesDictionary[screen].map(async (response) => {
-        console.log("decoding response: ", response);
+        // console.log("decoding response: ", response);
 
         const audioBuffer = await decodeFile(response);
         audioBuffersDictionary[screen].push({ url: response.url, buffer: audioBuffer });

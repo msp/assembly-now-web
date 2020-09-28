@@ -67,6 +67,7 @@ function requestCameraAccess(tl) {
 function startExperience(tl) {
     GUI.bindStartExperienceHandler(function() {
         GUI.fullscreen();
+        GUI.constrainVideoWidth();
         BackingTrack.play();
 
         let { stream, localVideo, remoteVideo } = GUI.getPermittedUserMedia()

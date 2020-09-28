@@ -37,7 +37,7 @@ function calculateTotalRequestedIn(fileDictionary) {
 
 async function getFilesFor(screen, fileDictionary) {
     await Promise.all(fileDictionary[screen].map(async (file) => {
-        console.log("preloading file: ", file);
+        // console.log("preloading file: ", file);
         const sample = await getFile(file);
         totalLoaded += 1;
         responsesDictionary[screen].push(sample);

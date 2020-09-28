@@ -101,6 +101,12 @@ div#videos > video {
     justify-content: inherit;
 }
 
+@media screen and (min-width: 1000px) {
+    #experience.screen {
+        padding: 0px;
+    }
+}
+
 #splash.screen {
     font-size: larger;
 }
@@ -159,14 +165,6 @@ div#videos > video {
     color: darksalmon;
 }
 
-/* Only if we need a subgrid?
-#videos {
-    border: 1px solid red;
-    display: grid;
-    grid-template-columns: auto;
-    justify-content: center;
-} */
-
 video {
     opacity: 0;
     position: absolute;
@@ -185,7 +183,6 @@ video {
 #projector {
     opacity: 0;
     display: block;
-    /* TODO Need to calc this is JS per device */
     min-height: 80vh;
     margin-top: 5%;
     background-color: #ffff00;

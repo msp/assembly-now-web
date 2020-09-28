@@ -16,8 +16,8 @@ function init() {
     projector1 = new Timeline('projector1', 2); //VFX
     //console.log("MSP JSON light1: "+JSON.stringify(light1)+ "\n");
 
-    light1.events = [50, 1200, 3800];
-    light2.events = [300, 1500, 2500, 4050];
+    light1.events = [50, 1500, 4000];
+    light2.events = [300, 1500, 2500, 4010];
     projector1.events = [220, 1650, 2800, 5500];
 
     light1.runEvent = light1Event;

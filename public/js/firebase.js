@@ -8,7 +8,7 @@ const firebaseConfig = {
     storageBucket: "assembly-now-rtc.appspot.com",
     messagingSenderId: "832458070870",
     appId: "1:832458070870:web:4263727cccc3a4df4d54f7",
-    measurementId: "G-N9CPJJ57RM"
+    measurementId: "G-K6926JK9D4"
 };
 
 function init() {

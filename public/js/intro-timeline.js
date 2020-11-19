@@ -4,6 +4,7 @@ import * as AudioFX from './audio-fx.js';
 import * as BackingTrack from './backing-track.js';
 import * as Preloader from './preloader.js';
 import * as GUI from './gui.js';
+import * as Timetable from './timetable.js';
 import * as Utils from './utils.js';
 
 let debugMode = Utils.debugMode();
@@ -111,7 +112,7 @@ async function runPreloader(tl) {
 
         Preloader.run(AudioFX.fileDictionary()).then((responses) => {
             AudioFX.init(responses).then((audioBuffers) => {
-                tl.resume();
+                Timetable.check(tl);
             });
         });
     } else {

@@ -223,6 +223,28 @@ function showSupportedBrowserInfo() {
         display: 'inherit',
     });
 
+    hideloader();
+}
+
+function showViewingSchedule(futureViewings) {
+    futureViewings.forEach(function(viewing) {
+        var node = document.createElement("li");
+        var textNode = document.createTextNode(viewing);
+        node.appendChild(textNode);
+
+        document.getElementById("timetable").appendChild(node);
+    })
+
+    gsap.to("#schedule", {
+        duration: 1,
+        opacity: 1,
+        display: 'inherit',
+    });
+
+    hideloader();
+}
+
+function hideloader() {
     gsap.set("#splash.screen #loading-wrapper", { opacity: 0 });
     gsap.set("#splash.screen #loading-count", { opacity: 0 });
 }
@@ -243,5 +265,6 @@ export {
     showLight2Screen,
     showProjector1Screen,
     showSupportedBrowserInfo,
+    showViewingSchedule,
     updateLoaderStats,
 };

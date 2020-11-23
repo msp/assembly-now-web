@@ -4,6 +4,7 @@ import * as AudioFX from './audio-fx.js';
 import * as BackingTrack from './backing-track.js';
 import * as Preloader from './preloader.js';
 import * as GUI from './gui.js';
+import * as Timetable from './timetable.js';
 import * as Utils from './utils.js';
 
 let debugMode = Utils.debugMode();
@@ -102,18 +103,24 @@ function startExperience(tl) {
 
 async function runPreloader(tl) {
     const browserSupported = await Utils.browserSupported()
+    const timetable = await Timetable.read();
+    const activeViewing = timetable.activeViewings.length > 0
 
     if (browserSupported) {
-        GUI.updateLoaderStats(
-            0,
-            Preloader.calculateTotalRequestedIn(AudioFX.fileDictionary())
-        );
+        if (activeViewing) {
+            GUI.updateLoaderStats(
+                0,
+                Preloader.calculateTotalRequestedIn(AudioFX.fileDictionary())
+            );
 
-        Preloader.run(AudioFX.fileDictionary()).then((responses) => {
-            AudioFX.init(responses).then((audioBuffers) => {
-                tl.resume();
+            Preloader.run(AudioFX.fileDictionary()).then((responses) => {
+                AudioFX.init(responses).then((audioBuffers) => {
+                    tl.resume();
+                });
             });
-        });
+        } else {
+            GUI.showViewingSchedule(timetable);
+        }
     } else {
         GUI.showSupportedBrowserInfo();
     }

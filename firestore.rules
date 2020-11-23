@@ -8,5 +8,9 @@ service cloud.firestore {
     match /rooms/{document=**} {
       allow read, write;
     }
+
+    match /viewings/{document=**} {
+      allow read, write;
+    }
   }
 }

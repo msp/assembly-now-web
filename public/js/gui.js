@@ -226,22 +226,43 @@ function showSupportedBrowserInfo() {
     hideloader();
 }
 
-function showViewingSchedule(futureViewings) {
-    futureViewings.forEach(function(viewing) {
-        var node = document.createElement("li");
-        var textNode = document.createTextNode(viewing);
-        node.appendChild(textNode);
+function showViewingSchedule(timetable) {
+    let node;
+    let textNode;
 
-        document.getElementById("timetable").appendChild(node);
-    })
+    if (timetable.futureViewings.length == 0) {
+        updateScheduleIntro(
+            "Our virtual gallery is closed right now! Please check back later."
+        );
+    } else {
+        updateScheduleIntro(
+            "Our virtual gallery is closed right now! Please check back for future viewing(s) below:"
+        );
+    }
+
+    timetable.futureViewings.forEach(
+        (viewing) => addListItemTo("timetable", viewing)
+    );
 
     gsap.to("#schedule", {
-        duration: 1,
+        duration: 2,
         opacity: 1,
         display: 'inherit',
     });
 
     hideloader();
+}
+
+function addListItemTo(listId, text) {
+    const node = document.createElement("li");
+    const textNode = document.createTextNode(text);
+    node.appendChild(textNode);
+    document.getElementById(listId).appendChild(node);
+}
+
+function updateScheduleIntro(text) {
+    const textNode = document.createTextNode(text);
+    document.getElementById("schedule-message").appendChild(textNode);
 }
 
 function hideloader() {

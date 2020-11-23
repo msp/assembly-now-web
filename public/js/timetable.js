@@ -1,22 +1,24 @@
 import * as GUI from './gui.js';
 import * as Viewing from './viewing.js';
 
-async function check(tl) {
+async function read() {
+    const db = firebase.firestore();
+
     const now = new Date();
     const _now = new Date(now);
     const startOfToday = new Date(_now.setHours(0, 0, 0, 0));
 
+    const activeViewings = [];
+    const futureViewings = [];
+
     console.log("checking schedule at:", now);
     console.log("startOfToday: \t\t", startOfToday);
 
-    const db = firebase.firestore();
-    const viewingsCollection = await db.collection('viewings')
-        .where("date", ">=", startOfToday)
-        .orderBy("date")
-        .get();
-
-    const activeViewings = [];
-    const futureViewings = [];
+    const viewingsCollection =
+        await db.collection('viewings')
+            .where("date", ">=", startOfToday)
+            .orderBy("date")
+            .get();
 
     for (let doc of viewingsCollection.docs) {
         console.log("=================================================");
@@ -36,18 +38,12 @@ async function check(tl) {
     console.log("activeViewings", activeViewings);
     console.log("futureViewings", futureViewings);
 
-    if (activeViewings.length > 0) {
-        tl.resume();
-    } else {
-        if (futureViewings.length > 0) {
-            console.log("Our next private view is at " + futureViewings[0] + ", please check back then");
-            GUI.showViewingSchedule(futureViewings);
-        } else {
-            console.log("Sorry, now viewings scheduled right now. Please check back later!")
-        }
-    }
+    return {
+        activeViewings: activeViewings,
+        futureViewings: futureViewings
+    };
 }
 
 export {
-    check
+    read
 };

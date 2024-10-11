@@ -1,5 +1,5 @@
 import * as Utils from './utils.js';
-import './sac.js';
+import { AudioContext } from 'https://jspm.dev/standardized-audio-context';
 
 class Reverb {
     constructor(audioContext) {
@@ -88,7 +88,7 @@ const Projector1Files = [
     "https://dl.dropboxusercontent.com/s/rarws687ckqr1b5/BugTones-20.mp3?raw=1",
 ]
 
-const audioCtx = new window.sac.AudioContext();
+const audioCtx = new AudioContext();
 const audioBuffersDictionary = {
     light1: [],
     light2: [],

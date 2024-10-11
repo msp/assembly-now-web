@@ -1,5 +1,5 @@
 import * as Detect from './detect.js'
-import SAC from 'https://dev.jspm.io/npm:standardized-audio-context';
+import { isSupported } from 'https://jspm.dev/standardized-audio-context';
 
 const browser = Detect.detect();
 
@@ -31,7 +31,7 @@ async function browserSupported() {
         case 'ios':
         case 'edge':
         case 'edge-chromium':
-            const sacSupported = await SAC.isSupported();
+            const sacSupported = await isSupported();
             if (sacSupported) {
                 console.log(`Great! ${browser.name} supported. Onwards..`);
                 supported = true;

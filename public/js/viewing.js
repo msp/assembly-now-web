@@ -8,6 +8,7 @@ function active(now, viewingStart) {
 
     if (now > viewingEnd) {
         console.log("viewing over");
+        console.log("viewingEnd: \t", viewingEnd);
         return false;
     }
 

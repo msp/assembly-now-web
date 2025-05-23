@@ -193,7 +193,30 @@ function highlightBorder(screen) {
 }
 
 async function requestUserMedia() {
-    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    // Check if we're in secure context (required for getUserMedia)
+    if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+        throw new Error('getUserMedia requires HTTPS or localhost');
+    }
+    
+    let stream;
+    
+    // Modern API
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        stream = await navigator.mediaDevices.getUserMedia(constraints);
+    } else {
+        // Legacy API fallback
+        const getUserMedia = navigator.getUserMedia || 
+                            navigator.webkitGetUserMedia || 
+                            navigator.mozGetUserMedia;
+        
+        if (!getUserMedia) {
+            throw new Error('getUserMedia is not supported in this browser');
+        }
+        
+        stream = await new Promise((resolve, reject) => {
+            getUserMedia.call(navigator, constraints, resolve, reject);
+        });
+    }
     const localVideo = document.querySelector('#localVideo');
     const remoteVideo = document.querySelector('#remoteVideo');
 

@@ -85,7 +85,16 @@ function startExperience(tl) {
 
         networking.disconnectionCallback = async function() {
             mediaDelay.finalize();
-            mediaDelay.initialize();
+
+            // Random delay before re-pairing to increase solo time probability
+            const minTime = 15000;
+            const maxTime = 45000;
+            const soloDelay = Math.random() * (maxTime - minTime) + minTime;
+            console.log("Starting solo period. Re-pairing in", (soloDelay / 1000).toFixed(1), "seconds");
+
+            setTimeout(() => {
+                mediaDelay.initialize();
+            }, soloDelay);
         };
 
         mediaDelay.streamAddedCallback = async function() {

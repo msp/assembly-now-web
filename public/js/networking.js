@@ -42,7 +42,6 @@ class Networking {
     await this.deleteRoom();
     await this.resetWaitingRoom();
 
-    // Clear auto-disconnect timer
     if (this.autoDisconnectTimer) {
       clearTimeout(this.autoDisconnectTimer);
       this.autoDisconnectTimer = null;
@@ -53,7 +52,7 @@ class Networking {
     this.roomId = null;
     this.role = null;
     this.connectionEstablished = false;
-    if(this.disconnectionCallback) {
+    if (this.disconnectionCallback) {
       await this.disconnectionCallback();
     }
   }
@@ -123,17 +122,17 @@ class Networking {
         this.roomId = roomId;
         this.role = "caller";
       }
-      if(this.role == "caller") {
+      if (this.role == "caller") {
         window.setTimeout(async function() {
-          if(!this.connectionEstablished) {
+          if (!this.connectionEstablished) {
             console.log("connection timed out after 30s. Trying again...");
             await this.db.runTransaction(async transaction => {
               const existingRoom = await transaction.get(ref);
-              if(!existingRoom.exists) {
+              if (!existingRoom.exists) {
                 throw (new Error("waiting_room doc does not exist"));
               }
-              if(existingRoom.data().roomId == this.roomId) {
-                await transaction.update(ref, { "roomId": ""});
+              if (existingRoom.data().roomId == this.roomId) {
+                await transaction.update(ref, { "roomId": "" });
               }
             });
             this.finalize();
@@ -228,18 +227,21 @@ class Networking {
         this.remoteVideoElement.srcObject = this.remoteStream;
         try {
           await this.remoteVideoElement.play();
-        } catch(e) {
+        } catch (e) {
           //don't worry, it was already playing.
         }
-        if(this.connectionCallback) {
+        if (this.connectionCallback) {
           await this.connectionCallback(this.remoteStream);
         }
-        
-        // Auto-disconnect timer for cycling connections
-        const autoDisconnectTime = 60000; // 60 seconds - configurable
+
+        // Auto-disconnect timer for cycling connections with random range
+        const minTime = 45000;
+        const maxTime = 75000;
+        const autoDisconnectTime = Math.random() * (maxTime - minTime) + minTime;
+        console.log("Connection established. Auto-disconnect in", (autoDisconnectTime / 1000).toFixed(1), "seconds");
         this.autoDisconnectTimer = setTimeout(async () => {
           if (this.connectionEstablished) {
-            console.log("Auto-disconnect after", autoDisconnectTime/1000, "seconds");
+            console.log("Auto-disconnect after", autoDisconnectTime / 1000, "seconds");
             await this.finalize();
           }
         }, autoDisconnectTime);

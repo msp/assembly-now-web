@@ -42,6 +42,12 @@ class Networking {
     await this.deleteRoom();
     await this.resetWaitingRoom();
 
+    // Clear auto-disconnect timer
+    if (this.autoDisconnectTimer) {
+      clearTimeout(this.autoDisconnectTimer);
+      this.autoDisconnectTimer = null;
+    }
+
     this.remoteStream = null;
     this.peerConnection = null;
     this.roomId = null;
@@ -228,6 +234,15 @@ class Networking {
         if(this.connectionCallback) {
           await this.connectionCallback(this.remoteStream);
         }
+        
+        // Auto-disconnect timer for cycling connections
+        const autoDisconnectTime = 60000; // 60 seconds - configurable
+        this.autoDisconnectTimer = setTimeout(async () => {
+          if (this.connectionEstablished) {
+            console.log("Auto-disconnect after", autoDisconnectTime/1000, "seconds");
+            await this.finalize();
+          }
+        }, autoDisconnectTime);
       }
     }.bind(this));
   }

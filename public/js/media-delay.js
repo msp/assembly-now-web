@@ -19,7 +19,21 @@ class MediaDelay {
       }
       return;
     }
-    const mimeType = 'video/webm; codecs="opus,vp8"';
+    // Check for supported MIME types with fallbacks for Safari
+    let mimeType;
+    if (MediaRecorder.isTypeSupported('video/webm; codecs="opus,vp8"')) {
+      mimeType = 'video/webm; codecs="opus,vp8"';
+    } else if (MediaRecorder.isTypeSupported('video/mp4; codecs="avc1.42E01E,mp4a.40.2"')) {
+      mimeType = 'video/mp4; codecs="avc1.42E01E,mp4a.40.2"';
+    } else if (MediaRecorder.isTypeSupported('video/webm')) {
+      mimeType = 'video/webm';
+    } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+      mimeType = 'video/mp4';
+    } else {
+      console.error('No supported MediaRecorder MIME types found');
+      return;
+    }
+    
     var sourceBuffer;
     this.mediaRecorder = new MediaRecorder(this.originalStream, {
       mimeType: mimeType

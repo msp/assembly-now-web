@@ -47,13 +47,16 @@ class Networking {
       this.autoDisconnectTimer = null;
     }
 
+    // Capture connection state before resetting
+    const wasConnected = this.connectionEstablished;
+    
     this.remoteStream = null;
     this.peerConnection = null;
     this.roomId = null;
     this.role = null;
     this.connectionEstablished = false;
     if (this.disconnectionCallback) {
-      await this.disconnectionCallback();
+      await this.disconnectionCallback(wasConnected);
     }
   }
 

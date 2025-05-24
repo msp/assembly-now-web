@@ -83,18 +83,24 @@ function startExperience(tl) {
             mediaDelay.finalize();
         };
 
-        networking.disconnectionCallback = async function() {
+        networking.disconnectionCallback = async function(wasConnected) {
             mediaDelay.finalize();
 
-            // Random delay before re-pairing to increase solo time probability
-            const minTime = 15000;
-            const maxTime = 45000;
-            const soloDelay = Math.random() * (maxTime - minTime) + minTime;
-            console.log("Starting solo period. Re-pairing in", (soloDelay / 1000).toFixed(1), "seconds");
+            // Only add solo delay if user was actually connected to someone
+            if (wasConnected) {
+                const minTime = 15000;
+                const maxTime = 45000;
+                const soloDelay = Math.random() * (maxTime - minTime) + minTime;
+                console.log("Starting solo period. Re-pairing in", (soloDelay / 1000).toFixed(1), "seconds");
 
-            setTimeout(() => {
+                setTimeout(() => {
+                    mediaDelay.initialize();
+                }, soloDelay);
+            } else {
+                // Was never paired, reconnect immediately
+                console.log("Never paired, reconnecting immediately");
                 mediaDelay.initialize();
-            }, soloDelay);
+            }
         };
 
         mediaDelay.streamAddedCallback = async function() {

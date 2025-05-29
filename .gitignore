@@ -65,3 +65,7 @@ node_modules/
 .env
 
 .idea
+
+# msp
+local-networking.md
+test.html

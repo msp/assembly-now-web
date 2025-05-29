@@ -1,6 +1,6 @@
 class MediaDelay {
   constructor(stream, videoElement) {
-    this.originalStream  = stream;
+    this.originalStream = stream;
     this.videoElement = videoElement;
 
     this.mediaRecorder = null;
@@ -10,16 +10,41 @@ class MediaDelay {
   }
 
   initialize() {
-    if(!window.MediaRecorder) {
+    if (!window.MediaRecorder) {
       this.videoElement.srcObject = this.originalStream;
       this.videoElement.muted = true;
-      if(this.streamAddedCallback && !this.streamAddedCallbackCalled) {
+      if (this.streamAddedCallback && !this.streamAddedCallbackCalled) {
         this.streamAddedCallback();
         this.streamAddedCallbackCalled = true;
       }
       return;
     }
-    const mimeType = 'video/webm; codecs="opus,vp8"';
+    // Check for supported MIME types with fallbacks for Safari
+    let mimeType;
+    if (MediaRecorder.isTypeSupported('video/webm; codecs="opus,vp8"')) {
+      mimeType = 'video/webm; codecs="opus,vp8"';
+    } else if (MediaRecorder.isTypeSupported('video/mp4; codecs="avc1.42E01E,mp4a.40.2"')) {
+      mimeType = 'video/mp4; codecs="avc1.42E01E,mp4a.40.2"';
+    } else if (MediaRecorder.isTypeSupported('video/webm')) {
+      mimeType = 'video/webm';
+    } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+      mimeType = 'video/mp4';
+    } else {
+      console.error('No supported MediaRecorder MIME types found');
+      return;
+    }
+
+    // Check if MediaSource is supported (iOS Safari compatibility)
+    if (typeof MediaSource === 'undefined' || !MediaSource.isTypeSupported(mimeType)) {
+      console.warn('MediaSource not supported, using direct stream without delay');
+      this.videoElement.srcObject = this.originalStream;
+      if (this.streamAddedCallback && !this.streamAddedCallbackCalled) {
+        this.streamAddedCallback();
+        this.streamAddedCallbackCalled = true;
+      }
+      return;
+    }
+
     var sourceBuffer;
     this.mediaRecorder = new MediaRecorder(this.originalStream, {
       mimeType: mimeType
@@ -32,7 +57,7 @@ class MediaDelay {
     this.delayedStream = delayedStream;
     delayedStream.addEventListener('sourceopen', async function(event) {
       sourceBuffer = delayedStream.addSourceBuffer(mimeType);
-      if(this.streamAddedCallback && !this.streamAddedCallbackCalled) {
+      if (this.streamAddedCallback && !this.streamAddedCallbackCalled) {
         this.streamAddedCallbackCalled = true;
         await this.streamAddedCallback();
       }
@@ -49,7 +74,7 @@ class MediaDelay {
   }
 
   finalize() {
-    if(!window.MediaRecorder) {
+    if (!window.MediaRecorder) {
       if (this.videoElement.srcObject == this.originalStream) {
         this.videoElement.srcObject = null;
       }
@@ -57,7 +82,7 @@ class MediaDelay {
       this.streamAddedCallbackCalled = false;
       return;
     }
-    if(this.mediaRecorder) {
+    if (this.mediaRecorder) {
       this.mediaRecorder.ondataavailable = null;
       this.mediaRecorder.stop();
     }

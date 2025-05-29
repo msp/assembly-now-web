@@ -83,9 +83,24 @@ function startExperience(tl) {
             mediaDelay.finalize();
         };
 
-        networking.disconnectionCallback = async function() {
+        networking.disconnectionCallback = async function(wasConnected) {
             mediaDelay.finalize();
-            mediaDelay.initialize();
+
+            // Only add solo delay if user was actually connected to someone
+            if (wasConnected) {
+                const minTime = 15000;
+                const maxTime = 45000;
+                const soloDelay = Math.random() * (maxTime - minTime) + minTime;
+                console.log("Starting solo period. Re-pairing in", (soloDelay / 1000).toFixed(1), "seconds");
+
+                setTimeout(() => {
+                    mediaDelay.initialize();
+                }, soloDelay);
+            } else {
+                // Was never paired, reconnect immediately
+                console.log("Never paired, reconnecting immediately");
+                mediaDelay.initialize();
+            }
         };
 
         mediaDelay.streamAddedCallback = async function() {

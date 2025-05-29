@@ -27,6 +27,9 @@ $ npm install -g firebase-tools
 
 $ firebase serve --only hosting
 
+# OR, to allow other LAN clients to connect..
+$ firebase serve --only hosting --host 0.0.0.0 --port 5000
+
 $ open http://localhost:5000
 ```
 

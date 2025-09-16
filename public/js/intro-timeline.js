@@ -58,7 +58,7 @@ function play({ onComplete = () => console.log("nada") } = {}) {
 }
 
 function requestCameraAccess(tl) {
-    GUI.bindOpenCameraHandler(function() {
+    GUI.bindOpenCameraHandler(function () {
         GUI.requestUserMedia().then(() => {
             tl.resume();
         })
@@ -66,7 +66,7 @@ function requestCameraAccess(tl) {
 }
 
 function startExperience(tl) {
-    GUI.bindStartExperienceHandler(function() {
+    GUI.bindStartExperienceHandler(function () {
         GUI.fullscreen();
         GUI.constrainVideoWidth();
         BackingTrack.play();
@@ -78,12 +78,12 @@ function startExperience(tl) {
         const networking = new Networking(stream, localVideo, remoteVideo);
         const mediaDelay = new MediaDelay(stream, remoteVideo);
 
-        networking.connectionCallback = async function(remoteStream) {
+        networking.connectionCallback = async function (remoteStream) {
             await AudioFX.initReverbFromStream(remoteStream);
             mediaDelay.finalize();
         };
 
-        networking.disconnectionCallback = async function(wasConnected) {
+        networking.disconnectionCallback = async function (wasConnected) {
             mediaDelay.finalize();
 
             // Only add solo delay if user was actually connected to someone
@@ -103,7 +103,7 @@ function startExperience(tl) {
             }
         };
 
-        mediaDelay.streamAddedCallback = async function() {
+        mediaDelay.streamAddedCallback = async function () {
             await AudioFX.initReverbFromElement(remoteVideo);
             await networking.initialize();
         };
@@ -119,7 +119,7 @@ function startExperience(tl) {
 async function runPreloader(tl) {
     const browserSupported = await Utils.browserSupported()
     const timetable = await Timetable.read();
-    const activeViewing = timetable.activeViewings.length > 0
+    const activeViewing = timetable.activeViewings.length > 0 || Utils.collaboratorMode();
 
     if (browserSupported) {
         if (activeViewing) {

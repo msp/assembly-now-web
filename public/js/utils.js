@@ -13,8 +13,13 @@ function debugMode() {
     return urlParams.has('debug');
 }
 
+function collaboratorMode() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.has('collaborator');
+}
+
 function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
@@ -62,4 +67,4 @@ function browserInfoString() {
 }
 
 
-export { randomBetween, debugMode, uuidv4, browserInfoString, browserSupported }
+export { randomBetween, debugMode, collaboratorMode, uuidv4, browserInfoString, browserSupported }
